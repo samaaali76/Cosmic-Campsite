@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b18">
+  <meta name="description" content="Meet the eight planets in our solar system and explore the facts that make each world unique.">
+  <title>Planet Explorer | Cosmic Campsite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="planets.css">
+  <script src="planets.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="index.html" aria-label="Cosmic Campsite home">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>cosmic<span class="brand-light">campsite</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="primary-navigation" id="primary-navigation" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link active" href="planets.html" aria-current="page">Planets</a>
+        <a class="nav-link" href="missions.html">Missions</a>
+        <a class="nav-link" href="quiz.html">Quiz</a>
+        <a class="nav-link" href="progress.html">Progress</a>
+        <div class="nav-account">
+          <a class="nav-login" href="login.html">Log in</a>
+          <a class="button button-small button-outline" href="register.html">Join the crew <span aria-hidden="true">↗</span></a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="hero-stars" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="page-hero-inner page-shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> OUR SOLAR NEIGHBORHOOD</p>
+          <h1 id="page-title">Meet your <span>planetary neighbors.</span></h1>
+          <p class="hero-description">Eight unique worlds orbit our Sun. Start your tour close to home, then travel outward to the giant planets at the edge of our solar system.</p>
+          <a class="button button-primary" href="#planet-list">Start exploring <span aria-hidden="true">↓</span></a>
+          <div class="planet-count"><span class="count-mark" aria-hidden="true">✦</span><strong>8 planets</strong><span>one extraordinary solar system</span></div>
+        </div>
+        <div class="system-art" role="img" aria-label="A simple illustration showing the planets orbiting the Sun">
+          <span class="sun"></span>
+          <span class="system-orbit orbit-1"><i class="orbit-planet mercury-dot"></i></span>
+          <span class="system-orbit orbit-2"><i class="orbit-planet venus-dot"></i></span>
+          <span class="system-orbit orbit-3"><i class="orbit-planet earth-dot"></i></span>
+          <span class="system-orbit orbit-4"><i class="orbit-planet mars-dot"></i></span>
+          <span class="system-orbit orbit-5"><i class="orbit-planet jupiter-dot"></i></span>
+          <span class="system-orbit orbit-6"><i class="orbit-planet saturn-dot"></i></span>
+          <span class="system-orbit orbit-7"><i class="orbit-planet uranus-dot"></i></span>
+          <span class="system-orbit orbit-8"><i class="orbit-planet neptune-dot"></i></span>
+          <span class="system-label">A little corner of the Milky Way</span>
+        </div>
+      </div>
+      <div class="hero-bottom page-shell" aria-hidden="true"><span>START CLOSE TO HOME</span><span class="scroll-line"></span><span>TRAVEL OUTWARD</span></div>
+    </section>
+
+    <section class="explorer section-shell" id="planet-list" aria-labelledby="explorer-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> THE PLANETS, IN ORDER</p>
+          <h2 id="explorer-title">Choose a world <span>to explore.</span></h2>
+        </div>
+        <p class="section-intro">Select any planet to open its explorer card and discover a few of its defining features.</p>
+      </div>
+
+      <div class="planet-grid" id="planet-grid" aria-label="Planets in order from the Sun"></div>
+
+      <section class="planet-detail" id="planet-detail" aria-live="polite" aria-labelledby="detail-name" hidden>
+        <button class="back-button" id="back-to-planets" type="button"><span aria-hidden="true">←</span> Back to all planets</button>
+        <div class="detail-panel">
+          <div class="detail-art" id="detail-art" aria-hidden="true"></div>
+          <div class="detail-copy">
+            <p class="eyebrow"><span class="eyebrow-line"></span> PLANET <span id="detail-order"></span> FROM THE SUN</p>
+            <h2 id="detail-name"></h2>
+            <p class="detail-description" id="detail-description"></p>
+            <dl class="fact-grid" id="detail-facts"></dl>
+            <p class="detail-fun-fact"><span aria-hidden="true">✦</span><span id="detail-fun-fact"></span></p>
+          </div>
+        </div>
+      </section>
+      <p class="scale-note"><span aria-hidden="true">ⓘ</span> Planet illustrations are artistic and are not drawn to scale.</p>
+    </section>
+
+    <section class="next-step">
+      <div class="next-step-inner page-shell">
+        <div><p class="eyebrow">YOUR NEXT ADVENTURE</p><h2>Ready to put on your space suit?</h2><p>Take on a challenge and explore what it takes to travel beyond Earth.</p></div>
+        <a class="button button-primary" href="missions.html">Explore missions <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner page-shell">
+      <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><span></span></span><span>cosmic<span class="brand-light">campsite</span></span></a>
+      <p>Big universe. Curious minds. Endless discovery.</p>
+      <div class="footer-links"><a href="planets.html" aria-current="page">Planets</a><a href="missions.html">Missions</a><a href="quiz.html">Quiz</a></div>
+      <span class="copyright">© 2026 Cosmic Campsite</span>
+    </div>
+  </footer>
+</body>
+</html>

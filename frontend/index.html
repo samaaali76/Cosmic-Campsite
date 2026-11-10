@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b18">
+  <meta name="description" content="Explore planets, take on space missions, and discover the universe with Cosmic Campsite.">
+  <title>Cosmic Campsite | Your Universe Awaits</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="home.css">
+  <script src="home.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="index.html" aria-label="Cosmic Campsite home">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>cosmic<span class="brand-light">campsite</span></span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="primary-navigation" id="primary-navigation" aria-label="Main navigation">
+        <a class="nav-link active" href="index.html" aria-current="page">Home</a>
+        <a class="nav-link" href="planets.html">Planets</a>
+        <a class="nav-link" href="missions.html">Missions</a>
+        <a class="nav-link" href="quiz.html">Quiz</a>
+        <a class="nav-link" href="progress.html">Progress</a>
+        <div class="nav-account">
+          <a class="nav-login" href="login.html">Log in</a>
+          <a class="button button-small button-outline" href="register.html">Join the crew <span aria-hidden="true">↗</span></a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-stars" aria-hidden="true"></div>
+      <div class="hero-nebula" aria-hidden="true"></div>
+      <div class="hero-inner page-shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> YOUR SPACE ADVENTURE STARTS HERE</p>
+          <h1 id="hero-title">The universe<br>is <span>yours to explore.</span></h1>
+          <p class="hero-description">Travel beyond the ordinary. Meet distant worlds, take on out-of-this-world missions, and find out just how much you know about space.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="planets.html">Explore the planets <span aria-hidden="true">→</span></a>
+            <a class="button button-quiet" href="missions.html"><span class="play-icon" aria-hidden="true">▶</span> Discover missions</a>
+          </div>
+          <div class="hero-note"><span class="note-spark" aria-hidden="true">✦</span> A universe of discovery, made for curious minds.</div>
+        </div>
+
+        <div class="hero-art" role="img" aria-label="An illustrated blue and violet planet floating among the stars">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="planet-shadow"></div>
+          <div class="planet">
+            <div class="planet-highlight"></div>
+            <div class="planet-band band-one"></div>
+            <div class="planet-band band-two"></div>
+            <div class="planet-band band-three"></div>
+          </div>
+          <span class="art-star art-star-one" aria-hidden="true">✦</span>
+          <span class="art-star art-star-two" aria-hidden="true">✧</span>
+          <span class="art-star art-star-three" aria-hidden="true">✦</span>
+          <span class="satellite-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="hero-bottom page-shell" aria-hidden="true">
+        <span>READY FOR LIFTOFF?</span><span class="scroll-line"></span><span>SCROLL TO EXPLORE</span>
+      </div>
+    </section>
+
+    <section class="destinations section-shell" aria-labelledby="destinations-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> PICK YOUR NEXT ADVENTURE</p>
+          <h2 id="destinations-title">A whole universe <span>to discover.</span></h2>
+        </div>
+        <p class="section-intro">Every great explorer starts with a little curiosity. Where will yours take you?</p>
+      </div>
+
+      <div class="destination-grid">
+        <a class="destination-card card-planets" href="planets.html">
+          <div class="card-visual planet-visual" aria-hidden="true"><span class="mini-planet"></span><span class="mini-orbit"></span><span class="visual-spark spark-a">✦</span><span class="visual-spark spark-b">✧</span></div>
+          <div class="card-content">
+            <span class="card-number">01 / WORLDS</span>
+            <h3>Explore Planets</h3>
+            <p>Get to know the fascinating worlds that make up our solar system.</p>
+            <span class="card-link">Meet the planets <span aria-hidden="true">↗</span></span>
+          </div>
+        </a>
+
+        <a class="destination-card card-missions" href="missions.html">
+          <div class="card-visual mission-visual" aria-hidden="true"><span class="mission-moon"></span><span class="mission-ship">⌁</span><span class="visual-spark spark-c">✦</span><span class="mission-trail"></span></div>
+          <div class="card-content">
+            <span class="card-number">02 / MISSIONS</span>
+            <h3>Space Missions</h3>
+            <p>Take on hands-on challenges and see if you have what it takes.</p>
+            <span class="card-link">Choose a mission <span aria-hidden="true">↗</span></span>
+          </div>
+        </a>
+
+        <a class="destination-card card-quiz" href="quiz.html">
+          <div class="card-visual quiz-visual" aria-hidden="true"><span class="quiz-orbit orbit-a"></span><span class="quiz-orbit orbit-b"></span><span class="quiz-core">?</span><span class="visual-spark spark-d">✧</span><span class="visual-spark spark-e">✦</span></div>
+          <div class="card-content">
+            <span class="card-number">03 / KNOWLEDGE</span>
+            <h3>Test Your Knowledge</h3>
+            <p>Put your cosmic knowledge to the test with a quick space quiz.</p>
+            <span class="card-link">Take the quiz <span aria-hidden="true">↗</span></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="closing-cta" aria-labelledby="closing-title">
+      <div class="closing-stars" aria-hidden="true"></div>
+      <div class="closing-content">
+        <p class="eyebrow">THE COSMOS IS CALLING</p>
+        <h2 id="closing-title">Curiosity looks good on you.</h2>
+        <p>Start your journey through the stars today.</p>
+        <a class="button button-primary" href="planets.html">Begin exploring <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner page-shell">
+      <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><span></span></span><span>cosmic<span class="brand-light">campsite</span></span></a>
+      <p>Big universe. Curious minds. Endless discovery.</p>
+      <div class="footer-links"><a href="planets.html">Planets</a><a href="missions.html">Missions</a><a href="quiz.html">Quiz</a></div>
+      <span class="copyright">© 2026 Cosmic Campsite</span>
+    </div>
+  </footer>
+</body>
+</html>
