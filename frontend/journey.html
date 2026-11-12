@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b18">
+  <meta name="description" content="Follow a NASA-inspired space journey from the Moon to Mars and deep space with real mission imagery.">
+  <title>Space Journey | Cosmic Campsite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="journey.css">
+  <script src="missions-data.js" defer></script>
+  <script src="journey.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="index.html" aria-label="Cosmic Campsite home">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>cosmic<span class="brand-light">campsite</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="primary-navigation" id="primary-navigation" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="planets.html">Planets</a>
+        <a class="nav-link" href="missions.html">Missions</a>
+        <a class="nav-link active" href="journey.html" aria-current="page">Journey</a>
+        <a class="nav-link" href="quiz.html">Quiz</a>
+        <a class="nav-link" href="progress.html">Progress</a>
+        <div class="nav-account">
+          <a class="nav-login" href="login.html">Log in</a>
+          <a class="button button-small button-outline" href="register.html">Join the crew <span aria-hidden="true">↗</span></a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="journey-hero" aria-labelledby="journey-title">
+      <div class="journey-stars" aria-hidden="true"></div>
+      <div class="journey-hero-inner page-shell">
+        <div class="journey-hero-copy" data-reveal>
+          <p class="eyebrow"><span class="eyebrow-line"></span> YOUR FLIGHT PLAN</p>
+          <h1 id="journey-title">One small step.<br><span>A universe of journeys.</span></h1>
+          <p>Choose a destination and follow real missions from their first launch to their discoveries among the stars.</p>
+          <a class="button button-primary" href="#journey-stops">Choose your first stop <span aria-hidden="true">↓</span></a>
+          <p class="journey-note"><span aria-hidden="true">✦</span> Real missions · Real spacecraft imagery · NASA sources</p>
+        </div>
+        <figure class="journey-hero-image" data-reveal>
+          <img class="journey-photo" src="https://images-assets.nasa.gov/image/as17-148-22727/as17-148-22727~medium.jpg" alt="Apollo 17 photograph of Earth with Africa, cloud systems, and the Antarctic ice cap visible." width="1280" height="1280" fetchpriority="high" decoding="async">
+          <span class="journey-image-placeholder" aria-hidden="true">✦</span>
+          <figcaption><span>OUR HOME WORLD · APOLLO 17</span><a href="https://images.nasa.gov/details/as17-148-22727" target="_blank" rel="noopener noreferrer">Photo: NASA/JSC ↗</a></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="journey-section section-shell" id="journey-stops" aria-labelledby="route-title">
+      <div class="journey-section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> PICK A DESTINATION</p>
+          <h2 id="route-title">Where will your <span>journey go?</span></h2>
+        </div>
+        <p>Select a stop to reveal the missions, milestones, and imagery from that part of the journey.</p>
+      </div>
+
+      <ol class="route-picker" id="route-picker" aria-label="Journey destinations">
+        <li><button class="route-stop is-active" type="button" data-route="moon" aria-pressed="true"><span class="route-number">01</span><span class="route-stop-title">The Moon</span><span class="route-stop-note">First steps outward</span></button></li>
+        <li><button class="route-stop" type="button" data-route="mars" aria-pressed="false"><span class="route-number">02</span><span class="route-stop-title">Mars</span><span class="route-stop-note">A world to investigate</span></button></li>
+        <li><button class="route-stop" type="button" data-route="deep-space" aria-pressed="false"><span class="route-number">03</span><span class="route-stop-title">Deep Space</span><span class="route-stop-note">Beyond the familiar</span></button></li>
+      </ol>
+
+      <section class="route-content" id="route-content" aria-labelledby="route-stop-title">
+        <div class="route-intro">
+          <div><p class="route-kicker" id="route-kicker">DESTINATION 01 · MOON</p><h3 id="route-stop-title">The Moon</h3><p id="route-description" aria-live="polite"></p></div>
+          <a class="route-destination-link" id="route-destination-link" href="missions.html">Explore related destinations <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="journey-mission-grid" id="journey-missions" aria-label="Missions on this journey stop"></div>
+      </section>
+    </section>
+
+    <section class="journey-outro" aria-labelledby="journey-outro-title">
+      <div class="journey-outro-inner page-shell" data-reveal>
+        <div><p class="eyebrow">THE NEXT DISCOVERY IS YOURS</p><h2 id="journey-outro-title">Keep exploring the universe.</h2><p>Take a closer look at the worlds our spacecraft have visited.</p></div>
+        <div class="journey-outro-actions"><a class="button button-primary" href="planets.html">Explore planets <span aria-hidden="true">→</span></a><a class="button button-quiet" href="quiz.html">Try the space quiz <span aria-hidden="true">→</span></a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner page-shell">
+      <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><span></span></span><span>cosmic<span class="brand-light">campsite</span></span></a>
+      <p>Big universe. Curious minds. Endless discovery.</p>
+      <div class="footer-links"><a href="planets.html">Planets</a><a href="missions.html">Missions</a><a href="journey.html" aria-current="page">Journey</a><a href="quiz.html">Quiz</a></div>
+      <span class="copyright">© 2026 Cosmic Campsite</span>
+    </div>
+  </footer>
+</body>
+</html>

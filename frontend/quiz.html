@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b18">
+  <meta name="description" content="Test your knowledge of planets, NASA, space exploration, and famous missions in the Cosmic Campsite space quiz.">
+  <title>Space Quiz | Cosmic Campsite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="quiz.css">
+  <script src="quiz.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="index.html" aria-label="Cosmic Campsite home">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>cosmic<span class="brand-light">campsite</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="primary-navigation" id="primary-navigation" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="planets.html">Planets</a>
+        <a class="nav-link" href="missions.html">Missions</a>
+        <a class="nav-link" href="journey.html">Journey</a>
+        <a class="nav-link active" href="quiz.html" aria-current="page">Quiz</a>
+        <a class="nav-link" href="progress.html">Progress</a>
+        <div class="nav-account">
+          <a class="nav-login" href="login.html">Log in</a>
+          <a class="button button-small button-outline" href="register.html">Join the crew <span aria-hidden="true">↗</span></a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="hero-stars" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="page-hero-inner page-shell">
+        <div class="hero-copy" data-reveal>
+          <p class="eyebrow"><span class="eyebrow-line"></span> READY, SPACE EXPLORER?</p>
+          <h1 id="page-title">Put your cosmic<br><span>knowledge to the test.</span></h1>
+          <p class="hero-description">Ten questions will take you from the worlds in our solar system to the missions that have traveled beyond them. See how much you know!</p>
+          <a class="button button-primary" href="#quiz-intro">Start the quiz <span aria-hidden="true">↓</span></a>
+          <div class="quiz-count"><span aria-hidden="true">✦</span><strong>10 questions</strong><span>easy to hard</span></div>
+        </div>
+        <figure class="quiz-hero-art" data-reveal>
+          <img class="quiz-hero-photo" src="https://images-assets.nasa.gov/image/carina_nebula/carina_nebula~medium.jpg" alt="James Webb Space Telescope infrared image of the Cosmic Cliffs in the Carina Nebula." width="1280" height="853" fetchpriority="high" decoding="async">
+          <span class="quiz-hero-placeholder" aria-hidden="true">✦</span>
+          <figcaption><span>WEBB · COSMIC CLIFFS</span><a href="https://images.nasa.gov/details/carina_nebula" target="_blank" rel="noopener noreferrer">NASA/ESA/CSA/STScI ↗</a></figcaption>
+        </figure>
+      </div>
+      <div class="hero-bottom page-shell" aria-hidden="true"><span>TAKE A MOMENT TO THINK</span><span class="scroll-line"></span><span>YOU'VE GOT THIS</span></div>
+    </section>
+
+    <section class="quiz-section section-shell" id="quiz-section" aria-labelledby="quiz-heading">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> YOUR COSMIC CHALLENGE</p>
+          <h2 id="quiz-heading">Every answer brings <span>you closer.</span></h2>
+        </div>
+        <p class="section-intro">Choose one answer for each question. The challenge gets trickier as you go.</p>
+      </div>
+
+      <section class="quiz-intro" id="quiz-intro" aria-labelledby="quiz-intro-title" data-reveal>
+        <p class="eyebrow"><span class="eyebrow-line"></span> MISSION TRAINING CENTER</p>
+        <h3 id="quiz-intro-title">Choose your <span>training clearance.</span></h3>
+        <p>Each answer is a mission challenge. Choose a flight level, then review your mission report when you land.</p>
+        <div class="quiz-clearances" id="quiz-clearances" role="group" aria-label="Choose quiz difficulty">
+          <button type="button" class="clearance-card" data-quiz-level="Cadet" aria-pressed="false"><span class="clearance-code">LEVEL 01 · 3 QUESTIONS</span><strong>Cadet</strong><span>Easy · Learn the controls</span></button>
+          <button type="button" class="clearance-card is-selected" data-quiz-level="Explorer" aria-pressed="true"><span class="clearance-code">LEVEL 02 · 7 QUESTIONS</span><strong>Explorer</strong><span>Easy + Medium · Build your skill</span></button>
+          <button type="button" class="clearance-card" data-quiz-level="Commander" aria-pressed="false"><span class="clearance-code">LEVEL 03 · 10 QUESTIONS</span><strong>Commander</strong><span>All levels · Full mission profile</span></button>
+        </div>
+        <ol class="difficulty-guide" aria-label="Quiz difficulty stages">
+          <li class="difficulty-stage easy"><span class="difficulty-stage-number">STAGE 01</span><strong>Easy</strong><span>3 questions · warm up</span></li>
+          <li class="difficulty-stage medium"><span class="difficulty-stage-number">STAGE 02</span><strong>Medium</strong><span>4 questions · build momentum</span></li>
+          <li class="difficulty-stage hard"><span class="difficulty-stage-number">STAGE 03</span><strong>Hard</strong><span>3 questions · reach for the stars</span></li>
+        </ol>
+        <button class="button button-primary" id="start-quiz" type="button">Begin mission training <span aria-hidden="true">→</span></button>
+      </section>
+
+      <section class="quiz-card" id="quiz-panel" aria-labelledby="question-title" hidden>
+        <div class="quiz-topline">
+        <div class="question-position" id="question-count">Question 1 of 10 <span class="difficulty-pill easy">Easy</span><span class="topic-pill" id="question-topic">Topic</span></div>
+          <p class="score-display">Score <strong id="score-value">0</strong></p>
+        </div>
+        <div class="progress-row">
+          <progress id="question-progress" max="10" value="1" aria-label="Quiz question progress">1 out of 10</progress>
+          <span id="progress-label">1 / 10</span>
+          <div class="mission-progress-ring" role="img" aria-label="Mission progress: 0%">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="progress-ring-track" cx="50" cy="50" r="43"></circle><circle class="progress-ring-value" id="progress-ring-value" cx="50" cy="50" r="43"></circle></svg>
+            <span><strong id="mission-progress-percent">0%</strong><small>STATUS</small></span>
+          </div>
+        </div>
+        <ol class="quiz-flight-track" id="quiz-flight-track" aria-label="Quiz mission stages">
+          <li class="flight-stage" data-flight-stage="Easy"><span class="flight-stage-node" aria-hidden="true">01</span><span class="flight-stage-name">Launch</span><span class="flight-stage-level">Easy</span></li>
+          <li class="flight-stage" data-flight-stage="Medium"><span class="flight-stage-node" aria-hidden="true">02</span><span class="flight-stage-name">Orbit</span><span class="flight-stage-level">Medium</span></li>
+          <li class="flight-stage" data-flight-stage="Hard"><span class="flight-stage-node" aria-hidden="true">03</span><span class="flight-stage-name">Deep space</span><span class="flight-stage-level">Hard</span></li>
+        </ol>
+        <h3 class="question-title" id="question-title" tabindex="-1"></h3>
+        <div class="answer-options" id="answer-options" role="group" aria-labelledby="question-title"></div>
+        <div class="answer-feedback" id="answer-feedback" aria-live="polite" aria-atomic="true" hidden></div>
+        <div class="quiz-actions">
+          <button class="button button-primary next-button" id="next-question" type="button" hidden>Next question <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+
+      <section class="results-card" id="quiz-results" aria-labelledby="results-title" hidden>
+        <div class="results-art" aria-hidden="true"><span class="results-orbit"></span><span class="results-star">✦</span><span class="results-core">✧</span></div>
+        <p class="eyebrow"><span class="eyebrow-line"></span> MISSION COMPLETE</p>
+        <h2 id="results-title" tabindex="-1">You did it, space explorer!</h2>
+        <p class="results-score">You got <strong id="final-score">0 / 10</strong> correct <span id="final-percentage">(0%)</span></p>
+        <div class="mission-report" id="mission-report">
+          <p class="report-stamp" id="report-level">MISSION REPORT · EXPLORER</p>
+          <h3>Flight debrief</h3>
+          <p class="report-points">Mission points <strong id="report-points">0 / 0</strong></p>
+          <div class="report-topics" id="report-topics" aria-label="Topic report"></div>
+        </div>
+        <p class="results-message" id="result-message" aria-live="polite"></p>
+        <button class="button button-primary" id="restart-quiz" type="button">Play again <span aria-hidden="true">↻</span></button>
+      </section>
+    </section>
+
+      <section class="next-step" data-reveal>
+      <div class="next-step-inner page-shell">
+        <div><p class="eyebrow">KEEP EXPLORING</p><h2>Curiosity has no finish line.</h2><p>Discover the worlds in our solar system and meet the missions that study them.</p></div>
+        <a class="button button-primary" href="planets.html">Explore the planets <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner page-shell">
+      <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><span></span></span><span>cosmic<span class="brand-light">campsite</span></span></a>
+      <p>Big universe. Curious minds. Endless discovery.</p>
+      <div class="footer-links"><a href="planets.html">Planets</a><a href="missions.html">Missions</a><a href="journey.html">Journey</a><a href="quiz.html" aria-current="page">Quiz</a></div>
+      <span class="copyright">© 2026 Cosmic Campsite</span>
+    </div>
+  </footer>
+</body>
+</html>
