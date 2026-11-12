@@ -1,0 +1,71 @@
+:root {
+  /* Shared Cosmic Campsite design tokens. Page stylesheets can add local aliases. */
+  --cosmic-background: #070b1a;
+  --cosmic-background-raised: #0d1530;
+  --cosmic-blue: #477bff;
+  --cosmic-violet: #8257e8;
+  --cosmic-cyan: #54d8f5;
+  --cosmic-text: #f4f6ff;
+  --cosmic-text-muted: #a7b1cc;
+  --cosmic-border-subtle: rgba(177, 192, 232, .14);
+  --cosmic-border-glass: rgba(177, 192, 232, .22);
+  --cosmic-radius-small: 10px;
+  --cosmic-radius-card: 18px;
+  --cosmic-radius-panel: 22px;
+  --cosmic-radius-pill: 999px;
+  --cosmic-shadow-card: 0 18px 44px rgba(0, 0, 0, .24);
+  --cosmic-shadow-deep: 0 28px 80px rgba(0, 0, 0, .48);
+  --cosmic-glow-blue: 0 0 28px rgba(71, 123, 255, .2);
+  --cosmic-glow-violet: 0 0 30px rgba(130, 87, 232, .18);
+  --cosmic-font-heading: "Space Grotesk", "DM Sans", Arial, sans-serif;
+  --cosmic-font-body: "DM Sans", Arial, sans-serif;
+  --cosmic-transition-fast: 180ms ease;
+  --cosmic-transition-medium: 280ms ease;
+}
+
+/* A shared, lightweight atmosphere beneath each page's existing content. */
+html {
+  background-color: var(--cosmic-background);
+}
+
+body {
+  isolation: isolate;
+}
+
+body::before,
+body::after {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+body::before {
+  background-color: var(--cosmic-background);
+  background-image:
+    radial-gradient(ellipse at 13% 14%, rgba(71, 123, 255, .2), transparent 37%),
+    radial-gradient(ellipse at 87% 42%, rgba(130, 87, 232, .17), transparent 39%),
+    radial-gradient(ellipse at 54% 92%, rgba(84, 216, 245, .075), transparent 38%),
+    linear-gradient(135deg, #070b1a 0%, #0b1228 48%, #0d1530 100%);
+}
+
+body::after {
+  opacity: .34;
+  background-image:
+    radial-gradient(1px 1px at 13% 19%, rgba(244, 246, 255, .9) 98%, transparent),
+    radial-gradient(1px 1px at 68% 37%, rgba(180, 211, 255, .8) 98%, transparent),
+    radial-gradient(1.5px 1.5px at 41% 76%, rgba(223, 219, 255, .75) 98%, transparent);
+  background-size: 430px 390px, 610px 530px, 790px 680px;
+  background-repeat: repeat;
+  animation: cosmic-star-drift 160s ease-in-out infinite alternate;
+}
+
+@keyframes cosmic-star-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(5px, -4px, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+}

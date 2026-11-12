@@ -9,7 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="planets.css">
+  <script src="missions-data.js" defer></script>
   <script src="planets.js" defer></script>
 </head>
 <body>
@@ -27,6 +29,7 @@
         <a class="nav-link" href="index.html">Home</a>
         <a class="nav-link active" href="planets.html" aria-current="page">Planets</a>
         <a class="nav-link" href="missions.html">Missions</a>
+        <a class="nav-link" href="journey.html">Journey</a>
         <a class="nav-link" href="quiz.html">Quiz</a>
         <a class="nav-link" href="progress.html">Progress</a>
         <div class="nav-account">
@@ -49,17 +52,27 @@
           <a class="button button-primary" href="#planet-list">Start exploring <span aria-hidden="true">↓</span></a>
           <div class="planet-count"><span class="count-mark" aria-hidden="true">✦</span><strong>8 planets</strong><span>one extraordinary solar system</span></div>
         </div>
-        <div class="system-art" role="img" aria-label="A simple illustration showing the planets orbiting the Sun">
-          <span class="sun"></span>
-          <span class="system-orbit orbit-1"><i class="orbit-planet mercury-dot"></i></span>
-          <span class="system-orbit orbit-2"><i class="orbit-planet venus-dot"></i></span>
-          <span class="system-orbit orbit-3"><i class="orbit-planet earth-dot"></i></span>
-          <span class="system-orbit orbit-4"><i class="orbit-planet mars-dot"></i></span>
-          <span class="system-orbit orbit-5"><i class="orbit-planet jupiter-dot"></i></span>
-          <span class="system-orbit orbit-6"><i class="orbit-planet saturn-dot"></i></span>
-          <span class="system-orbit orbit-7"><i class="orbit-planet uranus-dot"></i></span>
-          <span class="system-orbit orbit-8"><i class="orbit-planet neptune-dot"></i></span>
-          <span class="system-label">A little corner of the Milky Way</span>
+        <div class="planet-showcase-wrap" data-reveal>
+          <figure class="planet-showcase" id="planet-showcase" aria-live="polite">
+            <img class="showcase-photo" id="showcase-photo" src="https://images-assets.nasa.gov/image/as17-148-22727/as17-148-22727~small.jpg" alt="Apollo 17 photograph of Earth with Africa, cloud systems, and the Antarctic ice cap visible." width="640" height="640" fetchpriority="high" decoding="async">
+            <span class="planet-image-placeholder" aria-hidden="true">✦</span>
+            <div class="showcase-overlay" aria-hidden="true"></div>
+            <figcaption class="showcase-caption">
+              <span class="showcase-number" id="showcase-number">03 / EARTH</span>
+              <span class="showcase-credit" id="showcase-credit">NASA/JSC · Apollo 17 photograph</span>
+              <a class="showcase-source" id="showcase-source" href="https://images.nasa.gov/details/as17-148-22727" target="_blank" rel="noopener noreferrer">View NASA image ↗</a>
+            </figcaption>
+          </figure>
+          <div class="planet-picker" id="planet-picker" role="group" aria-label="Choose a planet image to preview">
+            <button class="planet-pick" type="button" data-hero-planet="mercury" aria-label="Preview Mercury" aria-pressed="false"><img src="https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg" alt="" width="64" height="64" loading="lazy"><span>Mercury</span></button>
+            <button class="planet-pick" type="button" data-hero-planet="venus" aria-label="Preview Venus" aria-pressed="false"><img src="https://images-assets.nasa.gov/image/PIA00072/PIA00072~small.jpg" alt="" width="64" height="64" loading="lazy"><span>Venus</span></button>
+            <button class="planet-pick is-active" type="button" data-hero-planet="earth" aria-label="Preview Earth" aria-pressed="true"><img src="https://images-assets.nasa.gov/image/as17-148-22727/as17-148-22727~small.jpg" alt="" width="64" height="64" loading="lazy"><span>Earth</span></button>
+            <button class="planet-pick" type="button" data-hero-planet="mars" aria-label="Preview Mars" aria-pressed="false"><img src="https://images-assets.nasa.gov/image/PIA00407/PIA00407~small.jpg" alt="" width="64" height="64" loading="lazy"><span>Mars</span></button>
+            <button class="planet-pick" type="button" data-hero-planet="jupiter" aria-label="Preview Jupiter" aria-pressed="false"><img src="https://images-assets.nasa.gov/image/PIA22946/PIA22946~small.jpg" alt="" width="64" height="64" loading="lazy"><span>Jupiter</span></button>
+            <button class="planet-pick" type="button" data-hero-planet="saturn" aria-label="Preview Saturn" aria-pressed="false"><img src="https://images-assets.nasa.gov/image/PIA20481/PIA20481~small.jpg" alt="" width="64" height="64" loading="lazy"><span>Saturn</span></button>
+            <button class="planet-pick" type="button" data-hero-planet="uranus" aria-label="Preview Uranus" aria-pressed="false"><img src="https://images-assets.nasa.gov/image/PIA00032/PIA00032~small.jpg" alt="" width="64" height="64" loading="lazy"><span>Uranus</span></button>
+            <button class="planet-pick" type="button" data-hero-planet="neptune" aria-label="Preview Neptune" aria-pressed="false"><img src="https://images-assets.nasa.gov/image/PIA01492/PIA01492~small.jpg" alt="" width="64" height="64" loading="lazy"><span>Neptune</span></button>
+          </div>
         </div>
       </div>
       <div class="hero-bottom page-shell" aria-hidden="true"><span>START CLOSE TO HOME</span><span class="scroll-line"></span><span>TRAVEL OUTWARD</span></div>
@@ -74,22 +87,76 @@
         <p class="section-intro">Select any planet to open its explorer card and discover a few of its defining features.</p>
       </div>
 
+      <section class="solar-map" aria-labelledby="solar-map-title">
+        <div class="solar-map-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> NAVIGATE THE NEIGHBORHOOD</p><h3 id="solar-map-title">Choose a planet <span>from the map.</span></h3></div>
+          <p>Tap a world to open its NASA image and explorer dossier. Orbital spacing is schematic, not to scale.</p>
+        </div>
+        <div class="solar-map-layout">
+          <div class="solar-map-scroll" tabindex="0" aria-label="Scrollable schematic map of the eight planets">
+            <div class="solar-map-track" id="solar-map-track" role="group" aria-label="Select a planet"></div>
+          </div>
+          <div class="planet-radar" id="planet-radar" role="group" aria-label="Radar target scanner: select a planet">
+            <span class="radar-sweep" aria-hidden="true"></span><span class="radar-sun" aria-hidden="true">☼</span>
+          </div>
+        </div>
+      </section>
+
       <div class="planet-grid" id="planet-grid" aria-label="Planets in order from the Sun"></div>
 
       <section class="planet-detail" id="planet-detail" aria-live="polite" aria-labelledby="detail-name" hidden>
         <button class="back-button" id="back-to-planets" type="button"><span aria-hidden="true">←</span> Back to all planets</button>
         <div class="detail-panel">
-          <div class="detail-art" id="detail-art" aria-hidden="true"></div>
+          <figure class="detail-art" id="detail-art"></figure>
           <div class="detail-copy">
             <p class="eyebrow"><span class="eyebrow-line"></span> PLANET <span id="detail-order"></span> FROM THE SUN</p>
             <h2 id="detail-name"></h2>
             <p class="detail-description" id="detail-description"></p>
             <dl class="fact-grid" id="detail-facts"></dl>
-            <p class="detail-fun-fact"><span aria-hidden="true">✦</span><span id="detail-fun-fact"></span></p>
+            <p class="detail-fun-fact">
+              <span class="fun-fact-icon" aria-hidden="true">✦</span>
+              <span class="fun-fact-copy"><span class="fun-fact-label">PLANET FIELD NOTE</span><span id="detail-fun-fact"></span></span>
+            </p>
           </div>
         </div>
+        <p class="fact-source-note" id="fact-source-note"></p>
+        <div class="detail-explore-tools" id="detail-explore-tools"></div>
+        <section class="planet-missions" id="planet-missions" aria-labelledby="planet-missions-title" hidden>
+          <div class="subsection-heading"><p class="eyebrow">MISSIONS IN OUR ARCHIVE</p><h3 id="planet-missions-title">Spacecraft that visited <span id="mission-destination-name"></span></h3></div>
+          <div class="related-mission-list" id="related-mission-list"></div>
+          <p class="archive-note" id="mission-archive-note"></p>
+        </section>
+        <section class="mars-gallery" id="mars-gallery" aria-labelledby="mars-gallery-title" hidden>
+          <div class="subsection-heading"><p class="eyebrow">REAL SURFACE VIEWS</p><h3 id="mars-gallery-title">Mars through <span>rover cameras.</span></h3></div>
+          <div class="rover-gallery-grid" id="rover-gallery-grid"></div>
+        </section>
+        <section class="diameter-scale" aria-labelledby="diameter-scale-title">
+          <div class="subsection-heading"><p class="eyebrow">TRUE RELATIVE DIAMETERS</p><h3 id="diameter-scale-title">Worlds side <span>by side.</span></h3><p>Each circle uses the planet's equatorial diameter relative to Jupiter. These are scale diagrams, not photographs.</p></div>
+          <div class="diameter-scale-track" id="diameter-scale-track" aria-label="Planet diameter comparison"></div>
+        </section>
       </section>
-      <p class="scale-note"><span aria-hidden="true">ⓘ</span> Planet illustrations are artistic and are not drawn to scale.</p>
+
+      <section class="planet-comparison" aria-labelledby="comparison-title">
+        <div class="comparison-heading">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-line"></span> TWO WORLDS, SIDE BY SIDE</p>
+            <h2 id="comparison-title">Compare <span>planets.</span></h2>
+          </div>
+          <p>Compare diameter, distance, day, year, temperature, and gravity side by side.</p>
+        </div>
+        <form class="comparison-controls" id="comparison-form">
+          <label for="compare-planet-a">First planet
+            <select id="compare-planet-a" name="planetA"></select>
+          </label>
+          <span class="comparison-versus" aria-hidden="true">VS</span>
+          <label for="compare-planet-b">Second planet
+            <select id="compare-planet-b" name="planetB"></select>
+          </label>
+          <button class="button button-primary" type="submit">Compare worlds <span aria-hidden="true">↗</span></button>
+        </form>
+        <div class="comparison-results" id="comparison-results" aria-live="polite" hidden></div>
+      </section>
+      <p class="scale-note"><span aria-hidden="true">ⓘ</span> NASA spacecraft images use different views and framing; sizes are not to scale.</p>
     </section>
 
     <section class="next-step">
@@ -100,11 +167,23 @@
     </section>
   </main>
 
+  <dialog class="planet-image-viewer" id="planet-image-viewer" aria-labelledby="planet-viewer-title">
+    <div class="planet-viewer-panel">
+      <button class="planet-viewer-close" id="planet-viewer-close" type="button" aria-label="Close image viewer">×</button>
+      <figure class="planet-viewer-figure" id="planet-viewer-figure">
+        <img id="planet-viewer-image" src="" alt="">
+        <span class="planet-image-placeholder" aria-hidden="true">✦</span>
+        <figcaption><strong id="planet-viewer-title"></strong><a id="planet-viewer-source" href="" target="_blank" rel="noopener noreferrer">NASA image source ↗</a></figcaption>
+      </figure>
+      <p class="planet-viewer-credit" id="planet-viewer-credit"></p>
+    </div>
+  </dialog>
+
   <footer class="site-footer">
     <div class="footer-inner page-shell">
       <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><span></span></span><span>cosmic<span class="brand-light">campsite</span></span></a>
       <p>Big universe. Curious minds. Endless discovery.</p>
-      <div class="footer-links"><a href="planets.html" aria-current="page">Planets</a><a href="missions.html">Missions</a><a href="quiz.html">Quiz</a></div>
+      <div class="footer-links"><a href="planets.html" aria-current="page">Planets</a><a href="missions.html">Missions</a><a href="journey.html">Journey</a><a href="quiz.html">Quiz</a></div>
       <span class="copyright">© 2026 Cosmic Campsite</span>
     </div>
   </footer>

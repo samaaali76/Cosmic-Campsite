@@ -9,7 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="home.css">
+  <script src="missions-data.js" defer></script>
   <script src="home.js" defer></script>
 </head>
 <body>
@@ -43,70 +45,208 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-stars" aria-hidden="true"></div>
       <div class="hero-nebula" aria-hidden="true"></div>
+      <figure class="hero-art" role="img" aria-label="Artist's concept of an astronaut seated on a rocky moon beneath Earth, the Moon, and a star-filled galaxy.">
+        <figcaption class="hero-photo-caption">
+          <span class="hero-photo-caption-label">ARTIST'S CONCEPT · COSMIC CAMPSITE</span>
+        </figcaption>
+      </figure>
       <div class="hero-inner page-shell">
-        <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-line"></span> YOUR SPACE ADVENTURE STARTS HERE</p>
-          <h1 id="hero-title">The universe<br>is <span>yours to explore.</span></h1>
-          <p class="hero-description">Travel beyond the ordinary. Meet distant worlds, take on out-of-this-world missions, and find out just how much you know about space.</p>
+        <div class="hero-copy" data-reveal>
+          <p class="eyebrow"><span class="eyebrow-line"></span> EXPLORE <span aria-hidden="true">·</span> DISCOVER <span aria-hidden="true">·</span> LEARN</p>
+          <h1 id="hero-title">Beyond Earth,<br><span class="hero-title-blue">Every Mission</span><br><span class="hero-title-cyan">Leaves a Story.</span></h1>
+          <p class="hero-description">Step into the universe and explore real planets, legendary missions, and the mysteries of space.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="planets.html">Explore the planets <span aria-hidden="true">→</span></a>
-            <a class="button button-quiet" href="missions.html"><span class="play-icon" aria-hidden="true">▶</span> Discover missions</a>
+            <a class="button button-primary" href="journey.html"><span class="hero-button-icon" aria-hidden="true">✦</span> Start Your Journey <span aria-hidden="true">→</span></a>
+            <button class="button button-quiet" id="watch-intro" type="button" aria-haspopup="dialog" aria-controls="home-intro-dialog"><span class="play-icon" aria-hidden="true">▶</span> Watch Intro</button>
           </div>
-          <div class="hero-note"><span class="note-spark" aria-hidden="true">✦</span> A universe of discovery, made for curious minds.</div>
         </div>
-
-        <div class="hero-art" role="img" aria-label="Artist's concept of an astronaut seated on a rocky moon beneath Earth, the Moon, and a star-filled galaxy."></div>
+        <nav class="journey-steps" aria-label="Explore Cosmic Campsite in four steps">
+          <a href="planets.html?planet=earth">
+            <span class="step-art" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="19"/><path d="M9 18h7l3 4-2 4 3 4-2 7M26 5l-2 7 5 4 6-2 6 3M26 43l-1-7 5-3 3-6 7-2"/></svg></span>
+            <span class="step-copy"><span class="step-number">01</span><strong>Earth</strong></span>
+          </a>
+          <span class="step-connector" aria-hidden="true"></span>
+          <a href="planets.html#planet-list">
+            <span class="step-art" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="4"/><ellipse cx="24" cy="24" rx="21" ry="8"/><ellipse cx="24" cy="24" rx="14" ry="18" transform="rotate(40 24 24)"/><circle cx="42" cy="21" r="2.5"/></svg></span>
+            <span class="step-copy"><span class="step-number">02</span><strong>Solar System</strong></span>
+          </a>
+          <span class="step-connector" aria-hidden="true"></span>
+          <a href="missions.html">
+            <span class="step-art" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M26 5c8-2 15-1 15-1s1 7-1 15c-2 7-8 13-15 15L14 23C16 16 22 7 26 5Z"/><path d="m17 27-8 2-4 10 10-4 2-8Zm13-12h.1"/><circle cx="31" cy="15" r="3"/><path d="m22 33-2 8 7-6"/></svg></span>
+            <span class="step-copy"><span class="step-number">03</span><strong>Missions</strong></span>
+          </a>
+          <span class="step-connector" aria-hidden="true"></span>
+          <a href="quiz.html">
+            <span class="step-art step-trophy" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M12 7h24v10a12 12 0 0 1-24 0V7ZM12 11H5v5a9 9 0 0 0 8 9m23-14h7v5a9 9 0 0 1-8 9M24 29v8m-9 5h18l-2-5H17z"/><path d="m24 9 1.7 3.2 3.5.5-2.6 2.5.6 3.5-3.2-1.7-3.2 1.7.6-3.5-2.6-2.5 3.5-.5z"/></svg></span>
+            <span class="step-copy"><span class="step-number">04</span><strong>Quiz</strong></span>
+          </a>
+        </nav>
       </div>
       <div class="hero-bottom page-shell" aria-hidden="true">
-        <span>READY FOR LIFTOFF?</span><span class="scroll-line"></span><span>SCROLL TO EXPLORE</span>
+        <svg class="scroll-mouse" viewBox="0 0 24 38"><rect x="5" y="1.5" width="14" height="26" rx="7"/><path d="M12 7v6m-5 17 5 5 5-5m-10 0 5 5 5-5"/></svg>
+        <span>SCROLL TO EXPLORE</span>
       </div>
     </section>
 
+    <dialog class="home-intro-dialog" id="home-intro-dialog" aria-labelledby="home-intro-title">
+      <div class="intro-dialog-topline"><span>FLIGHT PLAN · 30 SECOND TOUR</span><button class="intro-close" type="button" aria-label="Close introduction">×</button></div>
+      <p class="eyebrow"><span class="eyebrow-line"></span> YOUR COSMIC CAMPSITE</p>
+      <h2 id="home-intro-title">A universe of discovery, <span>one stop at a time.</span></h2>
+      <p class="intro-dialog-copy">Choose a world, follow the missions that reached it, then test what you discovered. Your journey begins right here at home.</p>
+      <div class="intro-stops" aria-label="Tour stops">
+        <a href="planets.html"><span>01</span><strong>Explore worlds</strong></a>
+        <a href="missions.html"><span>02</span><strong>Meet the missions</strong></a>
+        <a href="quiz.html"><span>03</span><strong>Take the challenge</strong></a>
+      </div>
+      <a class="button button-primary intro-start" href="journey.html">Start Your Journey <span aria-hidden="true">→</span></a>
+    </dialog>
+
     <section class="destinations section-shell" aria-labelledby="destinations-title">
-      <div class="section-heading">
+      <div class="section-heading" data-reveal>
         <div>
-          <p class="eyebrow"><span class="eyebrow-line"></span> PICK YOUR NEXT ADVENTURE</p>
-          <h2 id="destinations-title">A whole universe <span>to discover.</span></h2>
+          <p class="eyebrow"><span class="eyebrow-line"></span> EXPLORE THE UNIVERSE</p>
+          <h2 id="destinations-title">Worlds worth <span>getting to know.</span></h2>
         </div>
-        <p class="section-intro">Every great explorer starts with a little curiosity. Where will yours take you?</p>
+        <p class="section-intro">Start close to home, then follow real spacecraft images out to extraordinary worlds.</p>
       </div>
 
       <div class="destination-grid">
-        <a class="destination-card card-planets" href="planets.html">
-          <div class="card-visual planet-visual" aria-hidden="true"><span class="mini-planet"></span><span class="mini-orbit"></span><span class="visual-spark spark-a">✦</span><span class="visual-spark spark-b">✧</span></div>
+        <article class="destination-card planet-preview-card" data-reveal>
+          <figure class="card-visual planet-visual">
+            <img class="real-space-image" src="https://images-assets.nasa.gov/image/as17-148-22727/as17-148-22727~small.jpg" alt="Apollo 17 photograph of Earth with Africa, clouds, and the Antarctic ice cap visible." width="640" height="640" loading="lazy" decoding="async">
+            <span class="image-placeholder" aria-hidden="true">✦</span>
+            <figcaption class="image-credit"><a href="https://images.nasa.gov/details/as17-148-22727" target="_blank" rel="noopener noreferrer">NASA/JSC · Apollo 17 ↗</a></figcaption>
+          </figure>
           <div class="card-content">
-            <span class="card-number">01 / WORLDS</span>
-            <h3>Explore Planets</h3>
-            <p>Get to know the fascinating worlds that make up our solar system.</p>
-            <span class="card-link">Meet the planets <span aria-hidden="true">↗</span></span>
+            <span class="card-number">01 / OUR HOME</span>
+            <h3>Earth</h3>
+            <p>One bright, living world in a vast neighborhood of planets.</p>
+            <a class="card-link" href="planets.html?planet=earth">Explore Earth <span aria-hidden="true">↗</span></a>
           </div>
-        </a>
+        </article>
 
-        <a class="destination-card card-missions" href="missions.html">
-          <div class="card-visual mission-visual" aria-hidden="true"><span class="mission-moon"></span><span class="mission-ship">⌁</span><span class="visual-spark spark-c">✦</span><span class="mission-trail"></span></div>
+        <article class="destination-card planet-preview-card" data-reveal>
+          <figure class="card-visual mission-visual">
+            <img class="real-space-image" src="https://images-assets.nasa.gov/image/PIA00407/PIA00407~small.jpg" alt="Viking-era global color view of Mars assembled from spacecraft imaging data." width="640" height="640" loading="lazy" decoding="async">
+            <span class="image-placeholder" aria-hidden="true">✦</span>
+            <figcaption class="image-credit"><a href="https://images.nasa.gov/details/PIA00407" target="_blank" rel="noopener noreferrer">NASA/JPL/USGS ↗</a></figcaption>
+          </figure>
           <div class="card-content">
-            <span class="card-number">02 / MISSIONS</span>
-            <h3>Space Missions</h3>
-            <p>Take on hands-on challenges and see if you have what it takes.</p>
-            <span class="card-link">Choose a mission <span aria-hidden="true">↗</span></span>
+            <span class="card-number">02 / THE RED PLANET</span>
+            <h3>Mars</h3>
+            <p>A cold desert world shaped by giant volcanoes and ancient water.</p>
+            <a class="card-link" href="planets.html?planet=mars">Explore Mars <span aria-hidden="true">↗</span></a>
           </div>
-        </a>
+        </article>
 
-        <a class="destination-card card-quiz" href="quiz.html">
-          <div class="card-visual quiz-visual" aria-hidden="true"><span class="quiz-orbit orbit-a"></span><span class="quiz-orbit orbit-b"></span><span class="quiz-core">?</span><span class="visual-spark spark-d">✧</span><span class="visual-spark spark-e">✦</span></div>
+        <article class="destination-card planet-preview-card" data-reveal>
+          <figure class="card-visual quiz-visual">
+            <img class="real-space-image" src="https://images-assets.nasa.gov/image/PIA20481/PIA20481~small.jpg" alt="Cassini spacecraft view of Saturn's rings and north pole." width="640" height="640" loading="lazy" decoding="async">
+            <span class="image-placeholder" aria-hidden="true">✦</span>
+            <figcaption class="image-credit"><a href="https://images.nasa.gov/details/PIA20481" target="_blank" rel="noopener noreferrer">NASA/JPL-Caltech/SSI ↗</a></figcaption>
+          </figure>
           <div class="card-content">
-            <span class="card-number">03 / KNOWLEDGE</span>
-            <h3>Test Your Knowledge</h3>
-            <p>Put your cosmic knowledge to the test with a quick space quiz.</p>
-            <span class="card-link">Take the quiz <span aria-hidden="true">↗</span></span>
+            <span class="card-number">03 / RINGED GIANT</span>
+            <h3>Saturn</h3>
+            <p>A gas giant wrapped in wide, bright rings made mostly of ice and rock.</p>
+            <a class="card-link" href="planets.html?planet=saturn">Explore Saturn <span aria-hidden="true">↗</span></a>
           </div>
-        </a>
+        </article>
       </div>
+    </section>
+
+    <section class="forgotten-space section-shell" aria-labelledby="forgotten-title" data-reveal>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> HARDWARE LEFT BEHIND</p>
+          <h2 id="forgotten-title">Forgotten <span>in space.</span></h2>
+        </div>
+        <p class="section-intro">Some explorers came home. Their machines and experiments stayed behind to tell the story.</p>
+      </div>
+      <div class="hardware-grid" id="home-hardware-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="time-capsule section-shell" aria-labelledby="capsule-title" data-reveal>
+      <div class="capsule-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> HUMANITY'S MESSAGE TO THE STARS</p>
+        <p class="capsule-kicker">SPACE TIME CAPSULE · VOYAGER 1 &amp; 2</p>
+        <h2 id="capsule-title">A little piece of Earth, <span>travelling between stars.</span></h2>
+        <p class="capsule-lead">The Golden Record carries sounds and images chosen to introduce our world. It travels aboard the Voyager spacecraft; it was not left on a planet.</p>
+        <div class="capsule-tabs" role="group" aria-label="Explore the Voyager Golden Record">
+          <button type="button" class="capsule-tab is-active" data-capsule-part="record" aria-pressed="true">The record</button>
+          <button type="button" class="capsule-tab" data-capsule-part="cover" aria-pressed="false">The cover</button>
+          <button type="button" class="capsule-tab" data-capsule-part="message" aria-pressed="false">The message</button>
+        </div>
+        <p class="capsule-detail" id="capsule-detail" aria-live="polite">Each Voyager carries a 12-inch, gold-plated copper phonograph record with sounds and images from Earth.</p>
+        <a class="button button-primary" href="https://science.nasa.gov/mission/voyager/golden-record-overview/" target="_blank" rel="noopener noreferrer">Open the NASA archive <span aria-hidden="true">↗</span></a>
+      </div>
+      <figure class="capsule-art" id="capsule-art">
+        <img class="capsule-image" src="assets/home/voyager-golden-record.jpg" alt="NASA composite image showing the Voyager Golden Record, its cover, and an illustrative rendering of the spacecraft." width="981" height="552" loading="lazy" decoding="async">
+        <span class="capsule-image-placeholder" aria-hidden="true">✦</span>
+        <figcaption><span>VOYAGER GOLDEN RECORD · NASA/JPL-CALTECH</span><a href="https://science.nasa.gov/photojournal/voyagers-special-cargo-the-golden-record/" target="_blank" rel="noopener noreferrer">Image details ↗</a></figcaption>
+      </figure>
+    </section>
+
+    <section class="featured-mission section-shell" aria-labelledby="featured-mission-heading" data-reveal>
+      <div class="featured-mission-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> FEATURED MISSION · <span id="featured-mission-year">NASA ARCHIVE</span></p>
+        <h2 id="featured-mission-heading">Every mission leaves a story.</h2>
+        <h3 id="featured-mission-title">Choose a mission to explore.</h3>
+        <p id="featured-mission-summary" aria-live="polite"></p>
+        <div class="featured-mission-actions">
+          <a class="button button-primary" id="featured-mission-link" href="missions.html">Read the mission story <span aria-hidden="true">→</span></a>
+          <button class="button button-quiet" id="next-featured-mission" type="button" aria-controls="featured-mission-title featured-mission-summary featured-mission-image">Another mission <span aria-hidden="true">⟳</span></button>
+        </div>
+      </div>
+      <figure class="featured-mission-art" id="featured-mission-art">
+        <img id="featured-mission-image" src="" alt="" width="900" height="620" loading="lazy" decoding="async">
+        <span class="featured-mission-placeholder" aria-hidden="true">✦</span>
+        <figcaption><span id="featured-mission-credit"></span><a id="featured-mission-source" href="https://images.nasa.gov/" target="_blank" rel="noopener noreferrer">NASA image source ↗</a></figcaption>
+      </figure>
+    </section>
+
+    <section class="mission-links section-shell" aria-label="More ways to explore">
+      <a href="missions.html">Browse the mission archive <span aria-hidden="true">↗</span></a>
+      <a href="quiz.html">Test your space knowledge <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="journey-promo section-shell" aria-labelledby="journey-promo-title" data-reveal>
+      <div class="journey-promo-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> FOLLOW THE SPACECRAFT</p>
+        <h2 id="journey-promo-title">Your next stop is <span>out there.</span></h2>
+        <p>Travel from the Moon to Mars and onward with real missions, spacecraft imagery, and discoveries along the way.</p>
+        <a class="button button-primary" href="journey.html">Start the Space Journey <span aria-hidden="true">→</span></a>
+      </div>
+      <figure class="journey-promo-image">
+        <img class="real-space-image" src="https://images-assets.nasa.gov/image/PIA23645/PIA23645~medium.jpg" alt="Earth as a tiny point of light in Voyager 1's distant view of the solar system, known as the Pale Blue Dot." width="1280" height="720" loading="lazy" decoding="async">
+        <span class="image-placeholder" aria-hidden="true">✦</span>
+        <figcaption><span>VOYAGER 1 · PALE BLUE DOT</span><a href="https://science.nasa.gov/resource/voyager-pale-blue-dot-download/" target="_blank" rel="noopener noreferrer">Image: NASA/JPL-Caltech ↗</a></figcaption>
+      </figure>
+    </section>
+
+    <section class="daily-discovery section-shell" aria-labelledby="discovery-title" data-reveal>
+      <div class="discovery-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> TODAY'S NASA FIELD NOTE</p>
+        <p class="discovery-date" id="discovery-date"></p>
+        <h2 id="discovery-title">A new corner of the cosmos, <span>every day.</span></h2>
+        <h3 id="discovery-subject">Loading today's discovery…</h3>
+        <p class="discovery-fact" id="discovery-fact" aria-live="polite"></p>
+        <div class="discovery-actions">
+          <a class="button button-quiet" id="discovery-fact-source" href="https://science.nasa.gov/solar-system/" target="_blank" rel="noopener noreferrer">Read NASA's field guide <span aria-hidden="true">↗</span></a>
+          <button class="button button-outline" id="refresh-discovery" type="button" aria-controls="discovery-subject discovery-fact discovery-image">Another discovery <span aria-hidden="true">⟳</span></button>
+        </div>
+      </div>
+      <figure class="discovery-art" id="discovery-art">
+        <img id="discovery-image" src="" alt="" width="900" height="620" decoding="async" loading="lazy">
+        <span class="discovery-placeholder" aria-hidden="true">✦</span>
+        <figcaption><span id="discovery-image-credit"></span><a id="discovery-image-source" href="https://images.nasa.gov/" target="_blank" rel="noopener noreferrer">NASA image source ↗</a></figcaption>
+      </figure>
+      <p class="discovery-note">A hand-picked NASA fact and image, refreshed daily. Use “Another discovery” to explore more.</p>
     </section>
 
     <section class="closing-cta" aria-labelledby="closing-title">
       <div class="closing-stars" aria-hidden="true"></div>
-      <div class="closing-content">
+      <div class="closing-content" data-reveal>
         <p class="eyebrow">THE COSMOS IS CALLING</p>
         <h2 id="closing-title">Curiosity looks good on you.</h2>
         <p>Start your journey through the stars today.</p>
@@ -119,7 +259,7 @@
     <div class="footer-inner page-shell">
       <a class="brand footer-brand" href="index.html"><span class="brand-mark" aria-hidden="true"><span></span></span><span>cosmic<span class="brand-light">campsite</span></span></a>
       <p>Big universe. Curious minds. Endless discovery.</p>
-      <div class="footer-links"><a href="planets.html">Planets</a><a href="missions.html">Missions</a><a href="quiz.html">Quiz</a></div>
+      <div class="footer-links"><a href="planets.html">Planets</a><a href="missions.html">Missions</a><a href="journey.html">Journey</a><a href="quiz.html">Quiz</a></div>
       <span class="copyright">© 2026 Cosmic Campsite</span>
     </div>
   </footer>
