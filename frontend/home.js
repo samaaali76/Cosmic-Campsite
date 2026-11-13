@@ -2,25 +2,6 @@
 const menuToggle = document.querySelector(".menu-toggle");
 const primaryNavigation = document.querySelector("#primary-navigation");
 
-// The intro control opens a short, keyboard-accessible tour of the main pages.
-const watchIntroButton = document.querySelector("#watch-intro");
-const introDialog = document.querySelector("#home-intro-dialog");
-const introCloseButton = introDialog?.querySelector(".intro-close");
-
-if (watchIntroButton && introDialog && introCloseButton) {
-  watchIntroButton.addEventListener("click", () => {
-    if (typeof introDialog.showModal === "function") {
-      introDialog.showModal();
-      introCloseButton.focus();
-    }
-  });
-
-  introCloseButton.addEventListener("click", () => introDialog.close());
-  introDialog.addEventListener("click", (event) => {
-    if (event.target === introDialog) introDialog.close();
-  });
-}
-
 // Replace a failed NASA image with the matching CSS space placeholder.
 document.querySelectorAll(".real-space-image").forEach((image) => {
   const showImageFallback = () => {

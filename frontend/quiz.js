@@ -335,6 +335,7 @@ function showResults() {
   resultMessage.textContent = getResultMessage(percentage);
   updateMissionProgress(1);
   renderMissionReport();
+  saveQuizAttempt(percentage);
   quizPanel.hidden = true;
   quizResults.classList.remove("results-enter");
   quizResults.classList.remove("is-celebrating");
@@ -343,6 +344,59 @@ function showResults() {
   quizResults.classList.add("results-enter");
   if (percentage >= 80) quizResults.classList.add("is-celebrating");
   document.querySelector("#results-title").focus();
+}
+
+function saveQuizAttempt(percentage) {
+  const accountKey = (name) => window.CosmicAccount?.storageKey(name) || name;
+  const storageKey = accountKey("cosmic-campsite-quiz-attempts");
+  let attempts = [];
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || "[]");
+    if (Array.isArray(saved)) attempts = saved;
+    const previousAttemptCount = attempts.length;
+    attempts.push({
+      date: new Date().toISOString(),
+      level: selectedQuizLevel,
+      score,
+      total: questions.length,
+      percentage,
+      topics: answerReport.reduce((result, answer) => {
+        if (!result[answer.topic]) result[answer.topic] = { correct: 0, total: 0 };
+        result[answer.topic].total += 1;
+        if (answer.correct) result[answer.topic].correct += 1;
+        return result;
+      }, {})
+    });
+    localStorage.setItem(storageKey, JSON.stringify(attempts.slice(-50)));
+    const previousBadges = JSON.parse(localStorage.getItem(accountKey("cosmic-campsite-earned-badges")) || "null");
+    const badgeIds = new Set(Array.isArray(previousBadges) ? previousBadges : []);
+    const earned = new Set(badgeIds);
+    const missionHistory = JSON.parse(localStorage.getItem(accountKey("cosmic-campsite-mission-history")) || "[]");
+    if (Array.isArray(missionHistory) && missionHistory.length) earned.add("first-contact");
+    if (Array.isArray(missionHistory) && missionHistory.filter((mission) => mission.status === "Completed").length >= 3) earned.add("mission-specialist");
+    earned.add("quiz-cadet");
+    if (attempts.some((attempt) => Number(attempt.percentage) === 100)) earned.add("perfect-orbit");
+    localStorage.setItem(accountKey("cosmic-campsite-earned-badges"), JSON.stringify([...earned]));
+    const unlockedBadges = [];
+    if (previousAttemptCount === 0 && !badgeIds.has("quiz-cadet")) unlockedBadges.push("Quiz Cadet");
+    if (percentage === 100 && !badgeIds.has("perfect-orbit")) unlockedBadges.push("Perfect Orbit");
+    if (unlockedBadges.length) showQuizAchievement(`Badge unlocked: ${unlockedBadges.join(" + ")}!`);
+    if (window.CosmicAccount?.isSignedIn()) {
+      const latest = attempts[attempts.length - 1];
+      window.CosmicAccount.saveQuizAttempt(latest).catch(() => showQuizAchievement("Quiz saved to this account on this device. Sync is unavailable."));
+    }
+  } catch (error) {
+    // The results screen remains available when browser storage is disabled.
+  }
+}
+
+function showQuizAchievement(message) {
+  const toast = document.querySelector("#quiz-achievement-toast");
+  if (!toast) return;
+  document.querySelector("#quiz-toast-message").textContent = message;
+  toast.hidden = false;
+  window.clearTimeout(showQuizAchievement.timer);
+  showQuizAchievement.timer = window.setTimeout(() => { toast.hidden = true; }, 4600);
 }
 
 function advanceQuestion() {
