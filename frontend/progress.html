@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b18">
+  <meta name="description" content="Track your Cosmic Campsite quiz results and space learning progress.">
+  <title>Your Progress | Cosmic Campsite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="progress.css">
+  <script src="missions-data.js" defer></script>
+  <script src="account-data.js" defer></script>
+  <script src="progress.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="index.html" aria-label="Cosmic Campsite home"><span class="brand-mark" aria-hidden="true"><span></span></span><span>cosmic<span class="brand-light">campsite</span></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
+      <nav class="primary-navigation" id="primary-navigation" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Home</a><a class="nav-link" href="planets.html">Planets</a><a class="nav-link" href="missions.html">Missions</a><a class="nav-link" href="journey.html">Journey</a><a class="nav-link" href="quiz.html">Quiz</a><a class="nav-link active" href="progress.html" aria-current="page">Progress</a>
+        <div class="nav-account"><a class="nav-login" href="login.html">Log in</a><a class="button button-small button-outline" href="register.html">Join the crew <span aria-hidden="true">↗</span></a></div>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content" class="progress-main page-shell">
+    <section class="progress-hero explorer-profile" aria-labelledby="page-title">
+      <div class="profile-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> COSMIC EXPLORER · PERSONAL LOG</p>
+        <div class="profile-name-line"><h1 id="page-title"><span id="explorer-name">Cosmic Explorer</span><small>your space journey</small></h1><button class="edit-profile-button" id="edit-profile" type="button" aria-label="Edit explorer name">✎</button></div>
+        <p class="hero-description">Every mission you explore and every answer you get right helps you rise through the ranks.</p>
+        <div class="rank-block"><div class="rank-label"><span>CURRENT RANK</span><strong id="explorer-rank">Rookie Explorer</strong></div><div class="rank-track" role="progressbar" aria-label="Progress to next rank" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="rank-progress-fill"></span></div><p id="rank-progress-copy">Start exploring to earn your first XP.</p></div>
+        <a class="button button-primary" href="missions.html">Continue your journey <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="astronaut-scene" aria-label="Astronaut standing on the Moon with Earth in the distance">
+        <img class="profile-cover" src="assets/progress/lunar-explorer.png" alt="Astronaut on the Moon with Earth above the horizon" width="1408" height="768">
+        <div class="scene-scrim" aria-hidden="true"></div>
+        <label class="avatar-upload" for="avatar-upload" title="Choose an explorer avatar"><img id="avatar-image" alt="Explorer avatar"><span aria-hidden="true">✎</span></label>
+        <input id="avatar-upload" type="file" accept="image/*" hidden>
+        <div class="scene-caption"><span>CURRENT DESTINATION</span><strong id="home-world">Awaiting first mission</strong></div>
+      </div>
+    </section>
+    <section class="journey-section" aria-labelledby="journey-title"><div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> YOUR FLIGHT PATH</p><h2 id="journey-title">From Earth to the <span>outer reaches.</span></h2></div><p class="badge-hint">Open a mission to explore it. Complete its debrief to log a full mission.</p></div><div class="journey-route" id="journey-route" aria-label="Mission journey route"></div></section>
+    <section class="badge-section" aria-labelledby="badge-title"><div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> MILESTONES</p><h2 id="badge-title">Your explorer <span>badges.</span></h2></div><p class="badge-hint" id="badge-hint">Earn badges by exploring, completing missions, and mastering quizzes.</p></div><div class="badge-grid" id="badge-grid" aria-live="polite"></div></section>
+    <section class="progress-summary" aria-label="Quiz performance statistics">
+      <article class="summary-card"><span class="summary-icon" aria-hidden="true">✦</span><p>Total quizzes taken</p><strong id="attempt-count">0</strong></article>
+      <article class="summary-card"><span class="summary-icon" aria-hidden="true">✓</span><p>Correct answers</p><strong id="correct-count">0</strong></article>
+      <article class="summary-card"><span class="summary-icon" aria-hidden="true">◎</span><p>Accuracy</p><strong id="average-score">—</strong></article>
+      <article class="summary-card"><span class="summary-icon" aria-hidden="true">↗</span><p>Best score</p><strong id="best-score">—</strong></article>
+    </section>
+    <details class="detail-drawer" id="mission-history-drawer"><summary><span><small>FLIGHT LOG</small>Mission activity</span><span class="drawer-count" id="mission-count">0 missions</span></summary><div class="drawer-content"><div id="mission-empty" class="empty-state"><span class="empty-star" aria-hidden="true">✧</span><h3>Your first mission is waiting.</h3><p>Open any mission briefing to add it to your flight log. Answer its debrief question to mark it complete.</p><a class="button button-primary" href="missions.html">Browse missions <span aria-hidden="true">→</span></a></div><div class="mission-log" id="mission-log" aria-live="polite"></div></div></details>
+    <details class="detail-drawer" id="quiz-history-drawer"><summary><span><small>QUIZ HISTORY</small>Recent quiz results</span><span class="drawer-count" id="quiz-count-label">0 quizzes</span></summary><div class="drawer-content"><div id="progress-empty" class="empty-state"><span class="empty-star" aria-hidden="true">✧</span><h3>Your logbook is ready.</h3><p>Finish a quiz to add your score, difficulty, and topic results here.</p><a class="button button-primary" href="quiz.html">Take your first quiz <span aria-hidden="true">→</span></a></div><div class="attempt-list" id="attempt-list" aria-live="polite"></div><button class="text-button clear-history-button" id="clear-history" type="button" hidden>Clear quiz history</button></div></details>
+    <section class="progress-next" aria-labelledby="next-title"><div><p class="eyebrow"><span class="eyebrow-line"></span> KEEP EXPLORING</p><h2 id="next-title">Knowledge is a <span>launchpad.</span></h2><p>Visit a world or follow a spacecraft story, then come back with new questions.</p></div><div class="next-links"><a href="planets.html">Explore planets <span aria-hidden="true">↗</span></a><a href="missions.html">Browse missions <span aria-hidden="true">↗</span></a></div></section>
+  </main>
+  <div class="achievement-toast" id="achievement-toast" role="status" aria-live="polite" hidden><span class="toast-icon" aria-hidden="true">✦</span><span><small>ACHIEVEMENT UNLOCKED</small><strong id="toast-message"></strong></span></div>
+  <dialog class="profile-dialog" id="profile-dialog" aria-labelledby="profile-dialog-title"><form method="dialog"><button class="dialog-close" value="cancel" aria-label="Close">×</button><p class="eyebrow"><span class="eyebrow-line"></span> EXPLORER ID</p><h2 id="profile-dialog-title">Make it <span>yours.</span></h2><label for="explorer-name-input">Call sign</label><input id="explorer-name-input" maxlength="24" placeholder="Cosmic Explorer"><button class="button button-primary" id="save-profile" value="default">Save profile</button></form></dialog>
+  <footer class="site-footer"><div class="footer-inner"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><span></span></span><span>cosmic<span class="brand-light">campsite</span></span></a><p>Curiosity has no limit.</p><a href="index.html">Back to home ↑</a></div></footer>
+</body>
+</html>

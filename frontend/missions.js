@@ -1,6 +1,8 @@
 // Page behavior for the local, source-linked mission archive.
 document.documentElement.classList.add("js-ready");
 const missions = window.COSMIC_MISSIONS || [];
+const accountKey = (name) => window.CosmicAccount?.storageKey(name) || name;
+const missionHistoryKey = accountKey("cosmic-campsite-mission-history");
 const missionGrid = document.querySelector("#mission-grid");
 const archiveJourney = document.querySelector("#archive-journey");
 const missionTimeline = document.querySelector("#mission-timeline");
@@ -78,6 +80,56 @@ function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 }
 
+function recordMissionActivity(mission, status) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(missionHistoryKey) || "[]");
+    const history = Array.isArray(saved) ? saved : [];
+    const existingIndex = history.findIndex((entry) => entry.id === mission.id);
+    const existing = existingIndex >= 0 ? history[existingIndex] : null;
+    const activity = {
+      id: mission.id,
+      name: mission.title,
+      planet: mission.destinations.map((destination) => destination.label).join(" · "),
+      status: status === "Completed" || existing?.status === "Completed" ? "Completed" : "Explored",
+      date: new Date().toISOString()
+    };
+    if (existingIndex >= 0) history[existingIndex] = activity;
+    else history.unshift(activity);
+    localStorage.setItem(missionHistoryKey, JSON.stringify(history.slice(0, 100)));
+    window.dispatchEvent(new CustomEvent("cosmic-mission-history-updated"));
+    const attempts = JSON.parse(localStorage.getItem(accountKey("cosmic-campsite-quiz-attempts")) || "[]");
+    const previousBadges = JSON.parse(localStorage.getItem(accountKey("cosmic-campsite-earned-badges")) || "null");
+    const completedCount = history.filter((entry) => entry.status === "Completed").length;
+    const bestScore = Array.isArray(attempts) ? Math.max(0, ...attempts.map((entry) => Number(entry.percentage) || 0)) : 0;
+    const badgeRules = [
+      ["first-contact", history.length > 0, "First Contact"],
+      ["mission-specialist", completedCount >= 3, "Mission Specialist"],
+      ["quiz-cadet", Array.isArray(attempts) && attempts.length > 0, "Quiz Cadet"],
+      ["perfect-orbit", bestScore === 100, "Perfect Orbit"]
+    ];
+    const earnedBadges = badgeRules.filter(([, earned]) => earned).map(([id]) => id);
+    let unlockedBadge = null;
+    const newlyEarned = badgeRules.find(([id, earned]) => earned && (!Array.isArray(previousBadges) ? id === "first-contact" : !previousBadges.includes(id)));
+    if (newlyEarned) unlockedBadge = newlyEarned[2];
+    localStorage.setItem(accountKey("cosmic-campsite-earned-badges"), JSON.stringify(earnedBadges));
+    if (window.CosmicAccount?.isSignedIn()) {
+      window.CosmicAccount.saveMissionActivity(activity).catch(() => showMissionCompletionToast("Mission saved to this account on this device. Sync is unavailable."));
+    }
+    return unlockedBadge;
+  } catch {
+    // Mission exploration remains available even if browser storage is disabled.
+  }
+}
+
+function showMissionCompletionToast(message) {
+  const toast = document.querySelector("#mission-completion-toast");
+  if (!toast) return;
+  document.querySelector("#mission-toast-message").textContent = message;
+  toast.hidden = false;
+  window.clearTimeout(showMissionCompletionToast.timer);
+  showMissionCompletionToast.timer = window.setTimeout(() => { toast.hidden = true; }, 4600);
+}
+
 function getImageUrl(mission) {
   if (mission.imageUrl) return mission.imageUrl;
   const safeImageId = encodeURIComponent(mission.imageId);
@@ -95,7 +147,7 @@ function renderMissionCards(missionList) {
       : `<span class="destination-label">${escapeHtml(destination.label)}</span>`).join(", ");
     return `
       <article class="mission-card" data-category="${escapeHtml(mission.category)}">
-        <div class="mission-image-wrap">
+        <div class="mission-image-wrap" data-mission-label="${escapeHtml(mission.title)}">
           <img class="mission-image" src="${escapeHtml(getImageUrl(mission))}" alt="${escapeHtml(mission.imageAlt)}" loading="lazy">
         </div>
         <div class="mission-card-copy">
@@ -189,6 +241,8 @@ function renderMissionSections(mission) {
 function openMissionDetails(missionId, triggerButton) {
   const mission = missions.find((item) => item.id === missionId);
   if (!mission) return;
+  const unlockedBadge = recordMissionActivity(mission, "Explored");
+  if (unlockedBadge) showMissionCompletionToast(`Badge unlocked: ${unlockedBadge}`);
 
   missionDialog.classList.remove("is-closing");
   lastOpenedButton = triggerButton;
@@ -264,6 +318,11 @@ dialogSections.addEventListener("click", (event) => {
     if (button === answerButton) button.classList.add("is-selected", isCorrect ? "is-correct" : "is-incorrect");
   });
   const mission = missions.find((item) => item.debrief.questionId === debrief.dataset.questionId);
+  if (mission) {
+    recordMissionActivity(mission, "Completed");
+    const unlockedBadge = recordMissionActivity(mission, "Completed");
+    showMissionCompletionToast(unlockedBadge ? `Mission completed · ${unlockedBadge} badge unlocked!` : "Mission completed · Flight log updated");
+  }
   const feedback = debrief.querySelector(".debrief-feedback");
   feedback.textContent = `${isCorrect ? "Correct! " : "Not quite. "}${mission ? mission.debrief.explanation : "Review the mission source to explore the answer."}`;
   feedback.classList.add(isCorrect ? "feedback-correct" : "feedback-incorrect");

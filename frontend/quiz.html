@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="quiz.css">
+  <script src="account-data.js" defer></script>
   <script src="quiz.js" defer></script>
 </head>
 <body>
@@ -126,6 +127,7 @@
         <p class="results-message" id="result-message" aria-live="polite"></p>
         <button class="button button-primary" id="restart-quiz" type="button">Play again <span aria-hidden="true">↻</span></button>
       </section>
+      <div class="quiz-achievement-toast" id="quiz-achievement-toast" role="status" aria-live="polite" hidden><span aria-hidden="true">✦</span><strong id="quiz-toast-message"></strong></div>
     </section>
 
       <section class="next-step" data-reveal>

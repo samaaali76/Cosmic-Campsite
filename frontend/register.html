@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070914">
+  <meta name="description" content="Create your Cosmic Campsite explorer account and start a personal space journey.">
+  <title>Join the crew | Cosmic Campsite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth.css">
+  <script src="account-data.js" defer></script>
+  <script src="auth.js" defer></script>
+</head>
+<body class="auth-page" data-auth-mode="register">
+  <div class="auth-background" aria-hidden="true"><img src="assets/auth/space-journey.jpg" alt=""></div>
+  <div class="auth-stars" aria-hidden="true"></div><div class="auth-nebula nebula-a" aria-hidden="true"></div><div class="auth-nebula nebula-b" aria-hidden="true"></div>
+  <span class="shooting-star streak-a" aria-hidden="true"></span><span class="shooting-star streak-b" aria-hidden="true"></span><span class="shooting-star streak-c" aria-hidden="true"></span>
+  <header class="auth-header"><a class="brand" href="index.html" aria-label="Cosmic Campsite home"><span class="brand-mark" aria-hidden="true"><span></span></span><span>cosmic<span class="brand-light">campsite</span></span></a><a class="back-home" href="index.html"><span aria-hidden="true">←</span> Back to home</a></header>
+  <div class="auth-mobile-scene" aria-hidden="true"><img src="assets/auth/space-journey.jpg" alt=""></div>
+  <main class="auth-main register-main">
+    <section class="auth-card" aria-labelledby="auth-title">
+      <div class="auth-card-glow" aria-hidden="true"></div>
+      <div class="auth-card-content">
+        <div class="auth-monogram" aria-hidden="true"><span>✦</span></div>
+        <p class="auth-card-kicker">COSMIC CAMPSITE · CREW ACCESS</p>
+        <h2 id="auth-title">Join the <span>crew.</span></h2>
+        <p class="auth-subtitle">Keep your missions, quiz results, and discoveries in one explorer profile.</p>
+        <div class="auth-divider"><span></span><b>NEW EXPLORER</b><span></span></div>
+        <form class="auth-form" id="auth-form" novalidate>
+          <div class="form-field"><label for="auth-name">Explorer name</label><div class="input-shell"><span class="field-icon" aria-hidden="true">✦</span><input id="auth-name" name="name" type="text" placeholder="How should we call you?" autocomplete="nickname" maxlength="24" required aria-describedby="name-error"></div><small class="field-error" id="name-error"></small></div>
+          <div class="form-field"><label for="auth-email">Email address</label><div class="input-shell"><span class="field-icon" aria-hidden="true">✉</span><input id="auth-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" inputmode="email" required aria-describedby="email-error"><span class="field-check" aria-hidden="true">✓</span></div><small class="field-error" id="email-error"></small></div>
+          <div class="form-field"><label for="auth-password">Create password</label><div class="input-shell"><span class="field-icon" aria-hidden="true">⌑</span><input id="auth-password" name="password" type="password" placeholder="At least 8 characters" autocomplete="new-password" required minlength="8" maxlength="128" aria-describedby="password-error"><button class="password-toggle" type="button" data-password-toggle aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg></button></div><small class="field-error" id="password-error"></small></div>
+          <p class="auth-message" id="auth-message" role="status" aria-live="polite" hidden></p>
+          <button class="auth-submit" type="submit"><span class="submit-default"><span>Create explorer account</span><span aria-hidden="true">→</span></span><span class="submit-loading"><span class="launch-spinner" aria-hidden="true"></span> Preparing launch…</span></button>
+        </form>
+        <p class="auth-switch">Already part of the crew? <a href="login.html">Log in <span aria-hidden="true">↗</span></a></p>
+        <p class="auth-privacy"><span aria-hidden="true">◈</span> Your progress belongs to your account.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="auth-bottom"><span>© 2026 COSMIC CAMPSITE</span><span>EXPLORE · DISCOVER · LEARN</span></footer>
+</body>
+</html>

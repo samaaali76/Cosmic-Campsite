@@ -110,6 +110,13 @@ h2 { margin-bottom: 0; font-size: clamp(29px, 3vw, 39px); line-height: 1.2; lett
 .mission-image-wrap { height: 210px; overflow: hidden; position: relative; background: radial-gradient(ellipse at 50% 110%, rgba(72, 80, 162, .33), transparent 70%), #10172a; }
 .mission-image-wrap.image-unavailable { display: grid; place-items: center; }
 .mission-image-wrap.image-unavailable::before { content: "✦"; position: absolute; color: #b9b4ff; font-size: 31px; text-shadow: 0 0 24px rgba(169, 138, 255, .7); }
+.mission-image-wrap.image-unavailable { isolation: isolate; background: radial-gradient(ellipse at 50% 35%, rgba(111, 137, 255, .3), transparent 42%), radial-gradient(1px 1px at 18% 23%, #e9efff 99%, transparent), radial-gradient(1px 1px at 79% 68%, #d7e4ff 99%, transparent), linear-gradient(145deg, #121b3a, #090e20); }
+.mission-image-wrap.image-unavailable::after { content: attr(data-mission-label); position: absolute; inset: auto 0 0; display: grid; place-items: center; height: 62px; padding-top: 15px; color: #dbe5ff; font: 600 15px var(--font-heading); letter-spacing: .04em; background: linear-gradient(0deg, rgba(7,11,26,.86), transparent); }
+.mission-completion-toast { position: fixed; z-index: 30; right: 22px; bottom: 22px; display: flex; align-items: center; gap: 11px; max-width: min(380px,calc(100vw - 32px)); padding: 14px 18px; border: 1px solid rgba(84,216,245,.36); border-radius: 13px; color: #f4f6ff; background: rgba(9,18,40,.96); box-shadow: 0 10px 42px rgba(0,0,0,.45),0 0 22px rgba(84,216,245,.12); animation: mission-toast-pop .4s cubic-bezier(.2,.8,.2,1) both; backdrop-filter: blur(10px); }
+.mission-completion-toast[hidden] { display: none; }
+.mission-completion-toast > span { width: 34px; height: 34px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 10px; color: #fff; background: linear-gradient(145deg,#477bff,#8257e8); }
+.mission-completion-toast strong { font-size: 12px; line-height: 1.5; }
+@keyframes mission-toast-pop { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 .mission-image-wrap::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(0deg, rgba(10, 14, 28, .6), transparent); pointer-events: none; }
 .mission-image { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .35s ease; }
 .mission-image[hidden], .dialog-image[hidden] { display: none !important; }
@@ -247,6 +254,7 @@ body.dialog-open { overflow: hidden; }
   .mission-grid { grid-template-columns: 1fr; gap: 13px; }.mission-image-wrap { height: 210px; }.mission-card-copy { padding: 15px 15px 14px; }.mission-summary { min-height: 0; }.mission-filters { gap: 6px; }.filter-button { padding-inline: 10px; font-size: 10px; }.footer-links { gap: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .mission-completion-toast { animation: none; }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
 

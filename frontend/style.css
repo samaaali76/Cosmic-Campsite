@@ -23,6 +23,8 @@
   --cosmic-transition-medium: 280ms ease;
 }
 
+.sign-out-button { padding: 0; border: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
+
 /* A shared, lightweight atmosphere beneath each page's existing content. */
 html {
   background-color: var(--cosmic-background);
