@@ -12,6 +12,10 @@
   --font-heading: "Space Grotesk", "DM Sans", sans-serif;
   --radius-card: 18px;
   --content-width: 1160px;
+  --motion-fast: 180ms;
+  --motion-medium: 280ms;
+  --motion-reveal: 480ms;
+  --motion-ease: cubic-bezier(.2, .7, .2, 1);
 }
 
 * { box-sizing: border-box; }
@@ -81,7 +85,6 @@ h1 span { color: #a89cff; }
 .satellite-dot { position: absolute; z-index: 3; top: 33%; right: 10%; width: 8px; height: 8px; border-radius: 50%; background: #ffdcb0; box-shadow: 0 0 13px rgba(255, 220, 176, .7); }
 .hero-bottom { position: absolute; z-index: 2; bottom: 45px; left: 0; right: 0; display: flex; align-items: center; gap: 12px; color: #737f9c; font-size: 9px; font-weight: 700; letter-spacing: 1.4px; }
 .scroll-line { width: 42px; height: 1px; background: #58617b; }
-
 /* Destination cards */
 .destinations { padding-top: 74px; padding-bottom: 98px; }
 .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 31px; }
@@ -124,8 +127,7 @@ h2 span { color: #a89bff; }
   .menu-toggle { width: 42px; height: 42px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; padding: 0; border: 1px solid rgba(177, 192, 232, .18); border-radius: 9px; color: white; background: rgba(17, 24, 43, .8); cursor: pointer; }.menu-toggle span { width: 17px; height: 1.5px; border-radius: 2px; background: #e6e9f7; transition: transform .2s, opacity .2s; }
   .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(6.5px) rotate(45deg); }.menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }.menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-6.5px) rotate(-45deg); }
   .primary-navigation { position: absolute; top: 69px; left: 0; right: 0; display: none; align-items: stretch; gap: 0; padding: 10px 20px 20px; border-bottom: 1px solid var(--color-border); background: rgba(9, 13, 27, .98); }.primary-navigation.is-open { display: flex; flex-direction: column; }.nav-link { padding: 13px 3px; border-bottom: 1px solid rgba(177, 192, 232, .08); }.nav-link.active::after { display: none; }.nav-account { display: flex; justify-content: space-between; margin-top: 14px; padding-top: 3px; }.nav-login { padding: 10px 0; }
-  .hero { height: auto; min-height: 0; max-height: none; padding: 132px 0 85px; }.hero::after { background: linear-gradient(0deg, var(--color-space) 2%, rgba(8,11,24,.18) 38%, transparent 100%); }.hero-inner { width: calc(100% - 40px); display: flex; flex-direction: column; align-items: stretch; gap: 0; padding-top: 0; }.hero-copy { max-width: 100%; padding: 0; }.eyebrow { font-size: 9px; letter-spacing: 1.3px; }.hero h1 { font-size: clamp(43px, 11vw, 62px); letter-spacing: -2.8px; }.hero-description { max-width: 470px; font-size: 14px; line-height: 1.75; }.hero-actions { gap: 9px; }.button { min-height: 46px; padding-inline: 15px; font-size: 12px; }.hero-note { margin-top: 21px; }.hero-art { width: min(78vw, 370px); align-self: center; margin-top: -2px; margin-bottom: -28px; }.hero-bottom { bottom: 29px; justify-content: center; font-size: 8px; }
-  .destinations { padding-top: 60px; padding-bottom: 65px; }.section-heading { display: block; margin-bottom: 23px; }.section-intro { margin-top: 12px; }.destination-grid { grid-template-columns: 1fr; gap: 14px; }.destination-card { display: grid; grid-template-columns: 38% 1fr; min-height: 180px; }.card-visual { height: 100%; min-height: 180px; border-right: 1px solid rgba(177, 192, 232, .09); border-bottom: 0; }.mini-planet { width: 68px; height: 68px; }.mini-orbit { width: 135px; }.mission-moon { left: 27%; width: 54px; height: 54px; }.mission-ship { right: 18%; }.mission-trail { right: 23%; }.quiz-orbit { width: 85px; height: 85px; }.card-content { display: flex; flex-direction: column; justify-content: center; padding: 17px 16px; }.card-content h3 { margin: 8px 0 5px; font-size: 17px; }.card-content p { min-height: 0; margin-bottom: 10px; font-size: 11px; }.card-link { padding-top: 9px; }
+  .hero { height: auto; min-height: 0; max-height: none; padding: 132px 0 85px; }.hero::after { background: linear-gradient(0deg, var(--color-space) 2%, rgba(8,11,24,.18) 38%, transparent 100%); }.hero-inner { width: calc(100% - 40px); display: flex; flex-direction: column; align-items: stretch; gap: 0; padding-top: 0; }.hero-copy { max-width: 100%; padding: 0; }.eyebrow { font-size: 9px; letter-spacing: 1.3px; }.hero h1 { font-size: clamp(43px, 11vw, 62px); letter-spacing: -2.8px; }.hero-description { max-width: 470px; font-size: 14px; line-height: 1.75; }.hero-actions { gap: 9px; }.button { min-height: 46px; padding-inline: 15px; font-size: 12px; }.hero-note { margin-top: 21px; }.hero-art { width: min(78vw, 370px); align-self: center; margin-top: -2px; margin-bottom: -28px; }.hero-bottom { bottom: 29px; justify-content: center; font-size: 8px; }.destinations { padding-top: 60px; padding-bottom: 65px; }.section-heading { display: block; margin-bottom: 23px; }.section-intro { margin-top: 12px; }.destination-grid { grid-template-columns: 1fr; gap: 14px; }.destination-card { display: grid; grid-template-columns: 38% 1fr; min-height: 180px; }.card-visual { height: 100%; min-height: 180px; border-right: 1px solid rgba(177, 192, 232, .09); border-bottom: 0; }.mini-planet { width: 68px; height: 68px; }.mini-orbit { width: 135px; }.mission-moon { left: 27%; width: 54px; height: 54px; }.mission-ship { right: 18%; }.mission-trail { right: 23%; }.quiz-orbit { width: 85px; height: 85px; }.card-content { display: flex; flex-direction: column; justify-content: center; padding: 17px 16px; }.card-content h3 { margin: 8px 0 5px; font-size: 17px; }.card-content p { min-height: 0; margin-bottom: 10px; font-size: 11px; }.card-link { padding-top: 9px; }
   .closing-cta { min-height: 285px; }.closing-content h2 { font-size: 32px; }.footer-inner { min-height: 0; display: grid; grid-template-columns: 1fr auto; padding-block: 25px; gap: 16px; }.footer-inner > p { grid-column: 1 / -1; grid-row: 2; }.footer-links { grid-column: 1 / -1; grid-row: 3; }.copyright { grid-column: 2; grid-row: 1; text-align: right; font-size: 9px; }
 }
 @media (max-width: 390px) {
@@ -1104,8 +1106,12 @@ h2 span { color: #a89bff; }
     linear-gradient(180deg, rgba(5, 8, 18, .34), transparent 25%);
 }
 .hero-art {
-  z-index: 1;
+  position: absolute;
+  z-index: 3;
   inset: 0;
+  width: auto;
+  height: auto;
+  aspect-ratio: auto;
   overflow: hidden;
   background-color: #050914;
   background-image:
@@ -1330,5 +1336,88 @@ h2 span { color: #a89bff; }
   .primary-navigation .nav-link.active::after { display: none; }
   .nav-account { justify-content: space-between; margin: 6px 0 0; padding-top: 11px; border-top: 1px solid rgba(151,170,238,.15); }
   .menu-toggle { display: flex; flex: 0 0 42px; margin-left: auto; border: 1px solid rgba(177,192,232,.18); background: rgba(17,24,43,.8); }
+}
+
+/* Shared, restrained motion polish. Keep this after page styles so states stay consistent. */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: cosmic-page-leave 120ms var(--motion-ease) both; }
+::view-transition-new(root) { animation: cosmic-page-enter 190ms var(--motion-ease) both; }
+@keyframes cosmic-page-leave { to { opacity: .96; } }
+@keyframes cosmic-page-enter { from { opacity: .96; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cosmic-hero-copy-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cosmic-hero-art-enter { from { opacity: 0; transform: translateY(6px) scale(.995); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.nav-link, .nav-login { transition: color var(--motion-fast) var(--motion-ease); }
+.nav-link { position: relative; }
+.nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -8px; height: 1px; background: #9a8cff; transform: scaleX(0); transform-origin: left center; transition: transform var(--motion-medium) var(--motion-ease); }
+.nav-link.active::after { bottom: -31px; height: 2px; transform: scaleX(1); }
+.nav-link:not(.active):hover::after, .nav-link:not(.active):focus-visible::after { transform: scaleX(1); }
+.button { transition: transform var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease), border-color var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast) var(--motion-ease); }
+.button:hover { transform: translateY(-1px); }
+.button:active { transform: translateY(0) scale(.985); }
+.button:focus-visible { box-shadow: 0 0 0 5px rgba(169, 138, 255, .14); }
+.destination-card { transition: transform var(--motion-medium) var(--motion-ease), border-color var(--motion-medium) var(--motion-ease), box-shadow var(--motion-medium) var(--motion-ease); }
+.destination-card:hover { transform: translateY(-3px) scale(1.006); box-shadow: 0 14px 32px rgba(3, 6, 18, .24), 0 0 18px rgba(71, 123, 255, .09); }
+.destination-card img, .destination-card .destination-art { transition: transform var(--motion-medium) var(--motion-ease), filter var(--motion-medium) var(--motion-ease); }
+.destination-card:hover img, .destination-card:hover .destination-art { transform: scale(1.025); filter: brightness(1.035); }
+
+/* Observer and reduced-motion fallbacks keep all content available. */
+.motion-ready [data-reveal] { opacity: 0; transform: none; translate: 0 12px; transition: opacity var(--motion-reveal) var(--motion-ease), translate var(--motion-reveal) var(--motion-ease); }
+.motion-ready [data-reveal].is-visible { opacity: 1; transform: none; translate: 0 0; }
+.motion-ready .hero-copy > .eyebrow { animation: cosmic-hero-copy-enter 420ms var(--motion-ease) both; }
+.motion-ready .hero-copy > h1 { animation: cosmic-hero-copy-enter 420ms var(--motion-ease) 45ms both; }
+.motion-ready .hero-copy > .hero-description { animation: cosmic-hero-copy-enter 420ms var(--motion-ease) 90ms both; }
+.motion-ready .hero-copy > .hero-actions { animation: cosmic-hero-copy-enter 420ms var(--motion-ease) 135ms both; }
+.motion-ready .hero-art { animation: cosmic-hero-art-enter 560ms var(--motion-ease) 90ms both; }
+.motion-ready .destination-card[data-reveal].is-visible:hover { transform: translateY(-3px) scale(1.006); }
+.destination-grid .destination-card[data-reveal]:nth-child(2) { transition-delay: 45ms; }
+.destination-grid .destination-card[data-reveal]:nth-child(3) { transition-delay: 90ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
+  .motion-ready [data-reveal] { opacity: 1 !important; transform: none !important; translate: none !important; transition: none !important; }
+  .motion-ready .hero-copy > *, .motion-ready .hero-art { animation: none !important; }
+  .motion-ready .destination-card[data-reveal].is-visible:hover { transform: none; box-shadow: none; }
+  .destination-card:hover img, .destination-card:hover .destination-art { transform: none; filter: none; }
+  .button:hover, .button:active, .destination-card:hover { transform: none; }
+}
+
+/* Spline Earth sits over the existing cosmic artwork, which remains the fallback. */
+.hero-earth-stage {
+  position: absolute;
+  z-index: 3;
+  top: 8%;
+  right: 3.5%;
+  width: min(48vw, 660px);
+  height: min(48vw, 660px);
+  overflow: hidden;
+  pointer-events: none;
+  display: block;
+  background: radial-gradient(circle, rgba(19, 89, 171, .16), transparent 67%);
+}
+.hero-earth-stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+@media (max-width: 900px) {
+  .hero-earth-stage { top: 11%; right: 1%; width: min(57vw, 540px); height: min(57vw, 540px); }
+}
+@media (max-width: 700px) {
+  .hero-earth-stage {
+    top: 35%;
+    right: -3%;
+    width: min(78vw, 390px);
+    height: min(78vw, 390px);
+  }
+}
+@media (max-width: 390px) {
+  .hero-earth-stage { top: 37%; right: -5%; width: 78vw; height: 78vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* The hosted Spline scene has no supported reduced-motion control. */
+  .hero-earth-stage { display: none; }
 }
 

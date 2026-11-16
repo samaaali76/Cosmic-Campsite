@@ -12,6 +12,10 @@
   --font-heading: "Space Grotesk", "DM Sans", sans-serif;
   --radius-card: 18px;
   --content-width: 1160px;
+  --motion-fast: 180ms;
+  --motion-medium: 280ms;
+  --motion-reveal: 480ms;
+  --motion-ease: cubic-bezier(.2, .7, .2, 1);
 }
 
 * { box-sizing: border-box; }
@@ -469,4 +473,55 @@ h2 span { color: #a89bff; }
   .solar-map-planet, .solar-map-orb, .related-mission-card, .rover-image-link img, .diameter-world, .rover-hotspot { transition: none; }
   .solar-map-planet:hover, .solar-map-planet.is-selected, .related-mission-card:hover, .rover-image-link:hover img, .diameter-world:hover, .diameter-world.is-selected { transform: none; scale: 1; }
   .radar-sweep::before { animation:none; }
+}
+
+/* Match Home page motion timing while preserving the Planet Explorer content. */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: cosmic-page-leave 120ms var(--motion-ease) both; }
+::view-transition-new(root) { animation: cosmic-page-enter 190ms var(--motion-ease) both; }
+@keyframes cosmic-page-leave { to { opacity: .96; } }
+@keyframes cosmic-page-enter { from { opacity: .96; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cosmic-hero-copy-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cosmic-hero-art-enter { from { opacity: 0; transform: translateY(6px) scale(.995); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.nav-link, .nav-login { transition: color var(--motion-fast) var(--motion-ease); }
+.nav-link { position: relative; }
+.nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -8px; height: 1px; background: #9a8cff; transform: scaleX(0); transform-origin: left center; transition: transform var(--motion-medium) var(--motion-ease); }
+.nav-link.active::after { bottom: -31px; height: 2px; transform: scaleX(1); }
+.nav-link:not(.active):hover::after, .nav-link:not(.active):focus-visible::after { transform: scaleX(1); }
+.button { transition: transform var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease), border-color var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast) var(--motion-ease); }
+.button:hover { transform: translateY(-1px); }
+.button:active { transform: translateY(0) scale(.985); }
+.button:focus-visible { box-shadow: 0 0 0 5px rgba(169, 138, 255, .14); }
+.planet-card { transition: transform var(--motion-medium) var(--motion-ease), border-color var(--motion-medium) var(--motion-ease), box-shadow var(--motion-medium) var(--motion-ease); }
+.planet-card:hover { transform: translateY(-3px) scale(1.006); box-shadow: 0 14px 32px rgba(3, 6, 18, .24), 0 0 18px rgba(71, 123, 255, .09); }
+.planet-card-art .card-planet, .planet-photo { transition: transform var(--motion-medium) var(--motion-ease), filter var(--motion-medium) var(--motion-ease); }
+.planet-card:hover .card-planet { transform: scale(1.035); filter: brightness(1.04); }
+.planet-card:hover .planet-photo { transform: scale(1.025); }
+.planet-select { transition: transform var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast) var(--motion-ease), color var(--motion-fast) var(--motion-ease); }
+.planet-select:hover { transform: translateY(-1px); }
+.planet-select:active { transform: scale(.99); }
+.planet-pick { transition: transform var(--motion-fast) var(--motion-ease), border-color var(--motion-fast) var(--motion-ease), color var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease); }
+.planet-pick:hover { transform: translateY(-2px); }
+
+/* Observer and reduced-motion fallbacks keep all content available. */
+.motion-ready [data-reveal] { opacity: 0; transform: none; translate: 0 12px; transition: opacity var(--motion-reveal) var(--motion-ease), translate var(--motion-reveal) var(--motion-ease); }
+.motion-ready [data-reveal].is-visible { opacity: 1; transform: none; translate: 0 0; }
+.motion-ready .page-hero .hero-copy > .eyebrow { animation: cosmic-hero-copy-enter 420ms var(--motion-ease) both; }
+.motion-ready .page-hero .hero-copy > h1 { animation: cosmic-hero-copy-enter 420ms var(--motion-ease) 45ms both; }
+.motion-ready .page-hero .hero-copy > .hero-description { animation: cosmic-hero-copy-enter 420ms var(--motion-ease) 90ms both; }
+.motion-ready .page-hero .hero-copy > .button { animation: cosmic-hero-copy-enter 420ms var(--motion-ease) 135ms both; }
+.motion-ready .page-hero .hero-copy > .planet-count { animation: cosmic-hero-copy-enter 420ms var(--motion-ease) 180ms both; }
+.motion-ready .planet-showcase-wrap { animation: cosmic-hero-art-enter 560ms var(--motion-ease) 90ms both; }
+.motion-ready .planet-card[data-reveal].is-visible:hover { transform: translateY(-3px) scale(1.006); }
+.planet-grid .planet-card[data-reveal]:nth-child(2) { transition-delay: 45ms; }
+.planet-grid .planet-card[data-reveal]:nth-child(3) { transition-delay: 90ms; }
+.planet-grid .planet-card[data-reveal]:nth-child(4) { transition-delay: 135ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
+  .motion-ready [data-reveal] { opacity: 1 !important; transform: none !important; translate: none !important; transition: none !important; }
+  .motion-ready .page-hero .hero-copy > *, .motion-ready .planet-showcase-wrap { animation: none !important; }
+  .motion-ready .planet-card[data-reveal].is-visible:hover { transform: none; box-shadow: none; }
+  .planet-card:hover .card-planet, .planet-card:hover .planet-photo { transform: none; filter: none; }
 }
