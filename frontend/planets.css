@@ -525,3 +525,26 @@ h2 span { color: #a89bff; }
   .motion-ready .planet-card[data-reveal].is-visible:hover { transform: none; box-shadow: none; }
   .planet-card:hover .card-planet, .planet-card:hover .planet-photo { transform: none; filter: none; }
 }
+
+.planet-showcase-wrap { isolation: isolate; }
+.planets-astronaut {
+  position: absolute;
+  z-index: 4;
+  top: 38%;
+  right: -7%;
+  width: clamp(105px, 14vw, 180px);
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 15px 26px rgba(0, 0, 0, .45));
+  animation: planets-astronaut-drift 8s ease-in-out infinite;
+}
+@keyframes planets-astronaut-drift {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+@media (max-width: 760px) {
+  .planets-astronaut { top: 35%; right: -4%; width: 95px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .planets-astronaut { animation: none; }
+}

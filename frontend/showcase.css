@@ -1,0 +1,623 @@
+/* Shared visual system for the Cosmic Campsite experience. */
+:root {
+  --showcase-ink: #050916;
+  --showcase-panel: rgba(11, 20, 39, .82);
+  --showcase-panel-strong: rgba(7, 13, 27, .96);
+  --showcase-line: rgba(130, 175, 217, .2);
+  --showcase-line-bright: rgba(78, 224, 246, .58);
+  --showcase-lilac: #b5a2ff;
+  --showcase-cyan: #60e4ee;
+  --showcase-shadow: 0 28px 80px rgba(0, 0, 0, .42);
+  --showcase-ease: cubic-bezier(.2, .75, .25, 1);
+}
+
+/* One shared floating flight deck across every main page. */
+.site-header {
+  position: fixed;
+  z-index: 50;
+  width: 100%;
+  border-bottom-color: rgba(173, 199, 255, .11);
+  background: rgba(5, 10, 21, .84);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .18);
+  backdrop-filter: blur(20px) saturate(145%);
+  -webkit-backdrop-filter: blur(20px) saturate(145%);
+}
+.nav-shell {
+  display: grid;
+  grid-template-columns: minmax(195px, 245px) minmax(0, 1fr) auto;
+  width: min(1480px, calc(100% - 72px));
+  height: 82px;
+  gap: clamp(12px, 2vw, 30px);
+}
+.brand { min-width: 0; flex: 0 0 auto; gap: 12px; }
+.brand-mark { box-shadow: 0 0 22px rgba(127, 147, 255, .2); }
+.primary-navigation {
+  position: static;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: clamp(1px, .5vw, 8px);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+.primary-navigation .nav-link {
+  position: relative;
+  min-height: 48px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(8px, 1vw, 15px);
+  border: 0;
+  border-radius: 10px;
+  color: #aab7cf;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: color .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease, transform .22s ease;
+}
+.primary-navigation .nav-link:hover { color: #fff; background: rgba(76, 160, 226, .09); transform: none; }
+.primary-navigation .nav-link.active {
+  color: #fff;
+  background: transparent;
+  box-shadow: none;
+}
+.primary-navigation .nav-link.active::after { position: absolute; right: 13px; bottom: -16px; left: 13px; display: block; height: 2px; border-radius: 99px; background: linear-gradient(90deg, #5de7ed, #7891ff); box-shadow: 0 0 12px rgba(78, 224, 246, .72); }
+.nav-account { min-width: max-content; flex: 0 0 auto; align-items: center; gap: 16px; margin: 0; padding: 0; border: 0; }
+.nav-account .nav-login { padding: 8px 2px; color: #c0cce2; font-size: 12px; white-space: nowrap; }
+.nav-account .button { min-height: 42px; padding-inline: 17px; border: 1px solid rgba(94, 220, 239, .42); border-radius: 12px; color: #effcff; background: linear-gradient(125deg, rgba(48, 132, 207, .28), rgba(89, 88, 190, .28)); font-size: 11px; white-space: nowrap; box-shadow: 0 0 20px rgba(60, 181, 223, .08), inset 0 1px rgba(255,255,255,.1); }
+.nav-account .button:hover { border-color: rgba(94, 235, 247, .78); background: linear-gradient(125deg, rgba(48, 150, 222, .4), rgba(107, 91, 205, .4)); box-shadow: 0 0 26px rgba(60, 193, 233, .2); }
+.menu-toggle { display: none; }
+
+/* Calm depth and a single lighting language unify the page surfaces. */
+.page-hero,
+.journey-hero,
+.progress-hero,
+.next-step,
+.journey-outro,
+.progress-next,
+.closing-cta {
+  border-color: var(--showcase-line);
+  box-shadow: var(--showcase-shadow), inset 0 1px rgba(255,255,255,.045);
+}
+.page-hero,
+.journey-hero { isolation: isolate; }
+.page-hero::before,
+.journey-hero::before {
+  position: absolute;
+  z-index: 0;
+  inset: -25%;
+  content: "";
+  pointer-events: none;
+  opacity: .42;
+  background: conic-gradient(from 210deg at 72% 54%, transparent 0 23%, rgba(91, 138, 255, .12) 29%, transparent 37% 100%);
+  filter: blur(34px);
+  animation: cosmic-aurora-turn 58s linear infinite;
+}
+@keyframes cosmic-aurora-turn { to { transform: rotate(12deg) scale(1.03); } }
+.section-heading h2,
+.journey-section-heading h2 { text-wrap: balance; }
+.section-heading .section-intro,
+.section-intro { max-width: 54ch; }
+
+.destination-card,
+.hardware-card,
+.mission-card,
+.planet-card,
+.related-mission-card,
+.journey-mission-card,
+.journey-stop,
+.clearance-card,
+.badge-card,
+.summary-card,
+.mission-log-card,
+.attempt-card,
+.auth-card,
+.planet-pick {
+  border-color: var(--showcase-line);
+  box-shadow: 0 17px 48px rgba(0, 0, 0, .24), inset 0 1px rgba(255,255,255,.035);
+  transition: transform .32s var(--showcase-ease), border-color .28s ease, box-shadow .32s ease, background-color .28s ease;
+}
+.cosmic-tilt-card { transform-style: preserve-3d; will-change: transform; }
+.cosmic-tilt-card:hover,
+.cosmic-tilt-card:focus-within {
+  transform: perspective(1100px) rotateX(var(--cosmic-tilt-x, 0deg)) rotateY(var(--cosmic-tilt-y, 0deg)) translate3d(0, -5px, 8px);
+}
+.cosmic-tilt-card:active { transform: perspective(1100px) scale(.99); }
+.destination-card:hover,
+.hardware-card:hover,
+.mission-card:hover,
+.planet-card:hover,
+.related-mission-card:hover,
+.journey-mission-card:hover,
+.journey-stop:hover,
+.clearance-card:hover,
+.badge-card:hover,
+.summary-card:hover,
+.mission-log-card:hover,
+.attempt-card:hover,
+.planet-pick:hover {
+  border-color: var(--showcase-line-bright);
+  box-shadow: 0 25px 62px rgba(0, 0, 0, .34), 0 0 28px rgba(83, 159, 255, .1), inset 0 1px rgba(255,255,255,.07);
+}
+.destination-card img,
+.mission-image,
+.planet-card-art img,
+.journey-mission-image img { transition: transform .6s var(--showcase-ease), filter .5s ease; }
+.destination-card:hover img,
+.mission-card:hover .mission-image,
+.planet-card:hover .planet-card-art img,
+.journey-mission-card:hover .journey-mission-image img { filter: saturate(1.08) brightness(1.06); }
+.planet-card-art { transform-style: preserve-3d; }
+.planet-card-art img { transform: translateZ(12px); }
+.mission-image-wrap { transform: translateZ(8px); }
+.hardware-card-mark,
+.badge-icon,
+.summary-icon { filter: drop-shadow(0 0 14px rgba(111, 155, 255, .23)); }
+
+/* Quiz and account flows feel like mission-control instruments. */
+.clearance-card { background-image: linear-gradient(145deg, rgba(20, 31, 60, .88), rgba(9, 15, 33, .96)); }
+.clearance-card.is-selected,
+.clearance-card[aria-pressed="true"] { border-color: rgba(105, 221, 255, .56); box-shadow: 0 0 0 1px rgba(105, 221, 255, .11), 0 18px 48px rgba(51, 123, 232, .18), inset 0 1px rgba(255,255,255,.08); }
+.answer-option { transition: transform .23s var(--showcase-ease), border-color .22s ease, background .22s ease, box-shadow .22s ease; }
+.answer-option:not(:disabled):hover { transform: perspective(700px) translate3d(0, -2px, 8px); border-color: rgba(115, 228, 255, .55); box-shadow: 0 12px 30px rgba(0, 0, 0, .22), 0 0 21px rgba(83, 177, 255, .08); }
+.auth-card { box-shadow: 0 30px 100px rgba(0,0,0,.55), 0 0 48px rgba(104,113,238,.1), inset 0 1px rgba(255,255,255,.06); }
+.input-shell:focus-within { border-color: rgba(101, 222, 255, .72); box-shadow: 0 0 0 3px rgba(82, 183, 255, .1), 0 0 26px rgba(81, 185, 255, .12); }
+.button-primary { box-shadow: 0 10px 30px rgba(79, 103, 255, .22), inset 0 1px rgba(255,255,255,.2); }
+.button-primary:hover { box-shadow: 0 13px 40px rgba(91, 119, 255, .31), 0 0 23px rgba(94, 204, 255, .13), inset 0 1px rgba(255,255,255,.24); }
+
+/* Phone and tablet flight-deck navigation. */
+@media (max-width: 980px) {
+  .nav-shell { position: relative; grid-template-columns: minmax(0, 1fr) 44px; width: calc(100% - 40px); height: 72px; }
+  .menu-toggle {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-left: auto;
+    padding: 10px;
+    border: 1px solid rgba(163, 190, 255, .2);
+    border-radius: 13px;
+    background: rgba(13, 23, 48, .78);
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  }
+  .menu-toggle span { width: 18px; height: 1.5px; border-radius: 2px; background: #e5edff; transition: transform .24s ease, opacity .2s ease; }
+  .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(6.5px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-6.5px) rotate(-45deg); }
+  .primary-navigation {
+    position: absolute;
+    top: calc(100% + 9px);
+    right: 0;
+    left: auto;
+    display: none;
+    width: min(370px, calc(100vw - 24px));
+    max-height: calc(100svh - 96px);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 12px;
+    border: 1px solid rgba(163, 190, 255, .2);
+    border-radius: 18px;
+    background: rgba(7, 12, 29, .97);
+    box-shadow: 0 22px 70px rgba(0,0,0,.5), 0 0 30px rgba(92,123,255,.1);
+    backdrop-filter: blur(22px);
+    transform: none;
+  }
+  .primary-navigation.is-open { display: flex; animation: flight-deck-open .22s var(--showcase-ease) both; }
+  .primary-navigation .nav-link { min-height: 44px; justify-content: flex-start; padding-inline: 13px; border-radius: 11px; }
+  .primary-navigation .nav-link.active { box-shadow: inset 0 0 20px rgba(94, 145, 255, .11); }
+  .primary-navigation .nav-link.active::after { display: none; }
+  .nav-account { justify-content: space-between; margin: 7px 0 0; padding: 11px 4px 2px; border-top: 1px solid rgba(163,190,255,.14); border-left: 0; }
+  .nav-account .button { min-height: 42px; }
+}
+@keyframes flight-deck-open { from { opacity: 0; transform: translateY(-7px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (max-width: 560px) {
+  .nav-shell { grid-template-columns: minmax(0, 1fr) 44px; width: calc(100% - 32px); height: 68px; }
+  .brand { gap: 9px; font-size: 15px; }
+  .brand-mark { width: 34px; height: 34px; }
+  .brand-mark::before { width: 42px; height: 13px; }
+  .brand-mark span { width: 8px; height: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-hero::before, .journey-hero::before { animation: none; }
+  .primary-navigation .nav-link, .menu-toggle span, .answer-option,
+  .destination-card, .hardware-card, .mission-card, .planet-card,
+  .related-mission-card, .journey-mission-card, .journey-stop,
+  .clearance-card, .badge-card, .summary-card, .mission-log-card,
+  .attempt-card, .planet-pick { transition: none; }
+  .cosmic-tilt-card:hover, .cosmic-tilt-card:focus-within { transform: none !important; }
+  .answer-option:not(:disabled):hover { transform: none; }
+}
+
+@media (max-width: 760px) {
+  .auth-main, .auth-header { z-index: 1; }
+}
+
+/* COSMIC CAMPSITE · VISUAL REDESIGN */
+:root {
+  --color-space: #050815;
+  --color-space-raised: #091326;
+  --color-space-card: #0c192b;
+  --color-text: #f1f7ff;
+  --color-muted: #a3b2c8;
+  --color-blue: #65cbff;
+  --color-purple: #9d92ff;
+  --color-border: rgba(131, 180, 218, .19);
+  --cosmic-background: #050815;
+  --cosmic-background-raised: #091326;
+  --cosmic-blue: #65cbff;
+  --cosmic-violet: #8273f5;
+  --cosmic-cyan: #60e4ee;
+  --cosmic-text: #f1f7ff;
+  --cosmic-text-muted: #a3b2c8;
+  --cosmic-border-subtle: rgba(131, 180, 218, .17);
+  --cosmic-border-glass: rgba(131, 180, 218, .24);
+}
+html { background: #050815; }
+body:not(.auth-page) { background: #050815; color: #f1f7ff; }
+body:not(.auth-page)::before {
+  background-color: #050815;
+  background-image:
+    radial-gradient(ellipse at 78% 16%, rgba(41, 114, 168, .25), transparent 34%),
+    radial-gradient(ellipse at 13% 41%, rgba(83, 68, 171, .18), transparent 33%),
+    radial-gradient(ellipse at 66% 82%, rgba(22, 137, 151, .11), transparent 35%),
+    linear-gradient(135deg, #050815 0%, #091225 49%, #070d1b 100%);
+  background-size: 145% 145%;
+  animation: deep-field-drift 34s ease-in-out infinite alternate;
+}
+body:not(.auth-page)::after { opacity: .23; animation-duration: 130s; }
+@keyframes deep-field-drift { to { background-position: 100% 0, 0 100%, 100% 80%, 50% 50%; } }
+
+/* The previous pill navbar was squeezing its links and colliding at mid-width. */
+.nav-shell { grid-template-columns: minmax(205px, 250px) minmax(0, 1fr) auto; }
+.primary-navigation { overflow: visible; }
+.primary-navigation .nav-link { isolation: isolate; }
+.nav-account .button { min-width: 146px; }
+@media (max-width: 1200px) and (min-width: 981px) {
+  .nav-shell { grid-template-columns: minmax(180px, 220px) minmax(0, 1fr) auto; width: calc(100% - 44px); gap: 12px; }
+  .brand { gap: 9px; font-size: 17px; }
+  .brand-mark { width: 40px; height: 40px; }
+  .brand-mark::before { width: 50px; height: 15px; }
+  .primary-navigation { gap: 0; }
+  .primary-navigation .nav-link { padding-inline: 8px; font-size: 11px; }
+  .nav-account { gap: 10px; }
+  .nav-account .button { min-width: 128px; padding-inline: 11px; }
+}
+
+/* Rebuild the visual language around deep space, cold light, and observatory glass. */
+.site-header { border-bottom-color: rgba(128, 183, 219, .12); }
+.page-hero,
+.journey-hero,
+.progress-hero,
+.auth-card,
+.featured-mission,
+.time-capsule,
+.daily-discovery,
+.journey-outro,
+.progress-next {
+  border-color: rgba(123, 177, 216, .22);
+  background-color: rgba(8, 16, 32, .88);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .44), inset 0 1px rgba(255,255,255,.055);
+}
+.page-hero {
+  background:
+    radial-gradient(ellipse at 78% 44%, rgba(44, 153, 197, .22), transparent 36%),
+    radial-gradient(ellipse at 59% 3%, rgba(115, 86, 225, .16), transparent 42%),
+    linear-gradient(125deg, #050a16 0%, #0a1426 54%, #08101e 100%);
+}
+.page-hero::after {
+  background: linear-gradient(90deg, rgba(5, 9, 20, .1), transparent 72%), linear-gradient(0deg, #050815, transparent 18%);
+}
+.journey-hero { background: radial-gradient(ellipse at 74% 48%, rgba(37, 144, 184, .18), transparent 39%), linear-gradient(130deg, #050a17, #10102a 64%, #081421); }
+.page-hero h1,
+.journey-hero h1,
+.auth-story h1 { letter-spacing: -.065em; text-shadow: 0 12px 48px rgba(2, 7, 18, .45); }
+.page-hero h1 span,
+.journey-hero h1 span,
+.progress-hero h1 span,
+.progress-content h2 span,
+.progress-next h2 span,
+.auth-story h1 span {
+  color: transparent;
+  background: linear-gradient(105deg, #a9a0ff 0%, #8fc4ff 52%, #61e5ec 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.eyebrow { color: #9fb7cd; letter-spacing: .19em; }
+.eyebrow-line { width: 28px; background: linear-gradient(90deg, #76aaff, #62e3ed); box-shadow: 0 0 13px rgba(86, 207, 245, .48); }
+.section-heading h2,
+.journey-section-heading h2,
+.subsection-heading h3,
+.section-heading h2 span,
+.subsection-heading h3 span { letter-spacing: -.045em; }
+.section-heading h2 span,
+.journey-section-heading h2 span,
+.subsection-heading h3 span { color: #87cfff; }
+.hero-description,
+.section-intro { color: #b0bfd2; }
+
+.destination-card,
+.hardware-card,
+.mission-card,
+.planet-card,
+.related-mission-card,
+.journey-mission-card,
+.journey-stop,
+.clearance-card,
+.badge-card,
+.summary-card,
+.mission-log-card,
+.attempt-card,
+.planet-pick,
+.detail-drawer,
+.quiz-intro,
+.quiz-card,
+.results-card,
+.planet-comparison,
+.planet-detail {
+  overflow: hidden;
+  border: 1px solid rgba(128, 178, 215, .2);
+  border-radius: 22px;
+  background-image:
+    radial-gradient(330px circle at var(--cosmic-x, 84%) var(--cosmic-y, 0%), rgba(91, 197, 232, .105), transparent 48%),
+    linear-gradient(145deg, rgba(14, 27, 47, .92), rgba(6, 12, 25, .97));
+  box-shadow: 0 22px 58px rgba(0, 0, 0, .3), inset 0 1px rgba(255,255,255,.055);
+}
+.destination-card:hover,
+.hardware-card:hover,
+.mission-card:hover,
+.planet-card:hover,
+.related-mission-card:hover,
+.journey-mission-card:hover,
+.journey-stop:hover,
+.clearance-card:hover,
+.badge-card:hover,
+.summary-card:hover,
+.mission-log-card:hover,
+.attempt-card:hover,
+.planet-pick:hover {
+  border-color: rgba(91, 219, 239, .48);
+  box-shadow: 0 30px 75px rgba(0, 0, 0, .4), 0 0 34px rgba(46, 181, 221, .13), inset 0 1px rgba(255,255,255,.09);
+}
+.destination-card,
+.mission-card,
+.planet-card,
+.journey-mission-card,
+.journey-stop,
+.badge-card,
+.summary-card,
+.clearance-card { border-radius: 23px; }
+.mission-image-wrap,
+.featured-mission-art,
+.capsule-art,
+.discovery-art,
+.journey-mission-image,
+.planet-card-art { background-color: #081321; }
+.mission-image-wrap { height: 238px; }
+.featured-mission-art,
+.capsule-art,
+.discovery-art,
+.journey-mission-image { border-color: rgba(132, 192, 224, .26); box-shadow: 0 22px 58px rgba(0,0,0,.36), 0 0 28px rgba(41, 160, 207, .09); }
+.image-credit,
+.mission-image-wrap figcaption,
+.featured-mission-art figcaption,
+.capsule-art figcaption { color: #e2f4ff; }
+
+.button { border-radius: 12px; transition: transform .24s var(--showcase-ease), box-shadow .24s ease, border-color .24s ease, background .24s ease; }
+.button-primary {
+  color: #f7feff;
+  background: linear-gradient(112deg, #397fe6, #675ce2 57%, #7762d8);
+  box-shadow: 0 12px 34px rgba(57, 111, 221, .26), inset 0 1px rgba(255,255,255,.22);
+}
+.button-primary:hover { background: linear-gradient(112deg, #4b94f7, #796df0 57%, #8b75e8); }
+.button-quiet,
+.button-outline { border-color: rgba(125, 175, 219, .28); background: rgba(10, 20, 39, .66); }
+.filter-button,
+.capsule-tab { border-color: rgba(125, 175, 219, .2); background-color: rgba(9, 18, 35, .82); }
+.filter-button.is-active,
+.capsule-tab.is-active { border-color: rgba(90, 221, 234, .57); color: #efffff; background: linear-gradient(110deg, rgba(46, 127, 198, .26), rgba(116, 93, 211, .24)); box-shadow: 0 0 22px rgba(68, 196, 227, .11); }
+
+.answer-option {
+  border-color: rgba(125, 175, 219, .2);
+  border-radius: 14px;
+  background: linear-gradient(105deg, rgba(16, 29, 49, .94), rgba(9, 17, 32, .96));
+}
+.answer-option.is-correct { border-color: rgba(96, 228, 190, .66); box-shadow: 0 0 24px rgba(74, 223, 181, .1); }
+.answer-option.is-incorrect { border-color: rgba(255, 115, 143, .68); }
+.rank-track,
+.progress-ring-track { background-color: rgba(114, 151, 187, .16); }
+.rank-track span { background: linear-gradient(90deg, #5d9df0, #5ce0e5); box-shadow: 0 0 18px rgba(92, 224, 229, .44); }
+.badge-card.is-earned { border-color: rgba(92, 216, 223, .34); background-image: radial-gradient(circle at 50% 0, rgba(66, 179, 205, .18), transparent 65%), linear-gradient(145deg, rgba(14, 27, 47, .92), rgba(6, 12, 25, .97)); }
+.auth-card { border-radius: 26px; border-color: rgba(126, 184, 220, .25); background: linear-gradient(145deg, rgba(9, 17, 35, .91), rgba(4, 9, 20, .88)); }
+.auth-card-glow { background: rgba(54, 141, 207, .23); }
+.auth-card h2 span { color: #87d9ed; }
+.input-shell { border-color: rgba(124, 167, 202, .2); background: rgba(4, 10, 21, .78); }
+.input-shell:focus-within { border-color: rgba(88, 219, 234, .72); box-shadow: 0 0 0 3px rgba(82, 183, 255, .1), 0 0 26px rgba(81, 185, 255, .12); }
+
+@media (max-width: 980px) {
+  .site-header { background: rgba(5, 10, 21, .93); }
+  .nav-shell { grid-template-columns: minmax(0, 1fr) 44px; }
+  .primary-navigation { box-sizing: border-box; }
+  .nav-account { gap: 12px; }
+}
+@media (max-width: 700px) {
+  .mission-image-wrap { height: 215px; }
+  .destination-card,
+  .mission-card,
+  .planet-card,
+  .journey-mission-card,
+  .journey-stop,
+  .badge-card,
+  .summary-card,
+  .clearance-card { border-radius: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body:not(.auth-page)::before { animation: none; }
+}
+
+/* Cinematic scroll rhythm shared by the exploration pages. */
+.cosmic-page-progress {
+  position: fixed;
+  z-index: 100;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+  transform: scaleX(var(--cosmic-page-progress, 0));
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--showcase-lilac), var(--showcase-cyan));
+  box-shadow: 0 0 12px rgba(116, 160, 255, .38);
+}
+@supports (view-transition-name: root) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .34s; }
+  ::view-transition-old(root) { animation-name: cosmic-page-exit; }
+  ::view-transition-new(root) { animation-name: cosmic-page-enter; }
+  @keyframes cosmic-page-exit { to { opacity: .4; filter: blur(5px); transform: scale(.99); } }
+  @keyframes cosmic-page-enter { from { opacity: .5; filter: blur(5px); transform: scale(1.01); } }
+}
+.cinematic-motion-ready main > section.cinematic-reveal {
+  opacity: 0;
+  translate: 0 18px;
+  transition: opacity .65s var(--showcase-ease), translate .65s var(--showcase-ease);
+}
+.cinematic-motion-ready main > section.cinematic-reveal.is-cinematic-visible { opacity: 1; translate: 0 0; }
+.cinematic-motion-ready main > section.cinematic-reveal[data-cinematic-order="1"] { transition-delay: 45ms; }
+.cinematic-motion-ready main > section.cinematic-reveal[data-cinematic-order="2"] { transition-delay: 90ms; }
+.cinematic-motion-ready main > section.cinematic-reveal[data-cinematic-order="3"] { transition-delay: 135ms; }
+.cinematic-motion-ready main > section.cinematic-reveal[data-cinematic-order="4"] { transition-delay: 180ms; }
+.cinematic-motion-ready .planet-showcase-wrap { translate: 0 var(--cosmic-scroll-drift, 0px); }
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-motion-ready main > section.cinematic-reveal,
+  .cinematic-motion-ready main > section.cinematic-reveal.is-cinematic-visible { opacity: 1; translate: none; transition: none; }
+  .planet-showcase-wrap { translate: none !important; }
+}
+
+/* Planet navigator: make the selected NASA world the hero artwork. */
+.planet-showcase-wrap { width: min(43vw, 500px); }
+.planet-card.is-current-destination {
+  transform: translateY(-3px) scale(1.008);
+  border-color: rgba(84, 216, 245, .62);
+  box-shadow: 0 21px 55px rgba(3, 6, 18, .35), 0 0 30px rgba(71, 123, 255, .17), inset 0 1px rgba(255,255,255,.09);
+}
+.planet-card.is-current-destination .planet-card-art::after {
+  position: absolute;
+  inset: 0;
+  content: "CURRENT DESTINATION";
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 11px;
+  color: #e8efff;
+  background: linear-gradient(180deg, transparent 55%, rgba(8, 13, 29, .72));
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  pointer-events: none;
+}
+.planet-card.is-current-destination .planet-select { color: #fff; }
+.planet-showcase-wrap::before { inset: 4% -7% 15%; animation: planet-orbit-breathe 10s ease-in-out infinite alternate; }
+.planet-showcase-wrap::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0 4% 13%;
+  content: "";
+  border: 1px solid rgba(169, 180, 235, .13);
+  border-radius: 50%;
+  transform: rotate(25deg) scaleX(1.13);
+  pointer-events: none;
+}
+.planet-showcase {
+  width: min(100%, 470px);
+  height: auto;
+  aspect-ratio: 1;
+  margin-inline: auto;
+  border-radius: 50%;
+  box-shadow: 0 30px 80px rgba(3, 6, 18, .56), 0 0 70px rgba(71, 123, 255, .2), inset 0 0 30px rgba(7, 11, 26, .2);
+  animation: planet-hero-float 8s ease-in-out infinite;
+}
+.showcase-photo { object-position: center; }
+.showcase-overlay { background: linear-gradient(180deg, transparent 55%, rgba(7, 11, 26, .88)); }
+.showcase-caption { right: 11%; bottom: 11%; left: 11%; grid-template-columns: 1fr; justify-items: center; text-align: center; }
+.showcase-credit { font-size: 9px; }
+.showcase-source { padding: 6px 10px; border-radius: 999px; }
+.planet-picker { position: relative; z-index: 2; gap: 4px; margin: 18px auto 0; }
+.planet-pick { border-radius: 999px; }
+.planet-tour-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: -42px; padding: 0 0 56px; }
+.planet-tour-step,
+.planet-tour-toggle { min-height: 38px; border: 1px solid rgba(169, 180, 235, .25); color: #e9e6ff; background: rgba(8, 13, 29, .78); cursor: pointer; transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease; backdrop-filter: blur(12px); }
+.planet-tour-step { width: 38px; border-radius: 50%; font-size: 17px; }
+.planet-tour-toggle { padding: 0 15px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+.planet-tour-step:hover, .planet-tour-toggle:hover { transform: translateY(-2px); border-color: rgba(84, 216, 245, .58); background: rgba(30, 44, 79, .88); box-shadow: 0 0 20px rgba(71, 123, 255, .13); }
+.planet-tour-toggle[aria-pressed="true"] { border-color: rgba(84, 216, 245, .65); box-shadow: 0 0 18px rgba(84, 216, 245, .12); }
+.visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; clip-path: inset(50%) !important; }
+.page-hero .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; }
+.page-hero .hero-actions .button { min-height: 44px; }
+.quiz-follow-up-links { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 7px; }
+.quiz-follow-up-links a { color: #b7c8ff; font-size: 12px; font-weight: 700; transition: color .2s ease, transform .2s ease; }
+.quiz-follow-up-links a:hover { color: #fff; transform: translateX(2px); }
+.quiz-flight-track::after {
+  position: absolute;
+  z-index: 2;
+  top: 15px;
+  left: var(--flight-marker, 8%);
+  width: 17px;
+  height: 17px;
+  display: grid;
+  place-items: center;
+  content: "✦";
+  color: #fff;
+  font-size: 14px;
+  text-shadow: 0 0 12px rgba(169, 138, 255, .9);
+  transform: translate(-50%, -50%);
+  transition: left .42s var(--showcase-ease);
+  pointer-events: none;
+}
+.quiz-flight-track::before { background: linear-gradient(90deg, #6c9cff 0 var(--flight-progress, 0%), rgba(108, 156, 255, .18) var(--flight-progress, 0%) 100%); }
+.destination-link { color: #b8ccff; text-decoration: underline; text-decoration-color: rgba(169, 138, 255, .4); text-underline-offset: 3px; }
+.destination-link:hover { color: #fff; text-decoration-color: currentColor; }
+.mission-next-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+.mission-next-links[hidden] { display: none; }
+.mission-next-links a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border: 1px solid rgba(151, 160, 255, .28); border-radius: 999px; color: #e4e8ff; background: rgba(25, 35, 68, .68); font-size: 10px; font-weight: 700; transition: border-color .2s ease, background .2s ease, transform .2s ease; }
+.mission-next-links a:hover { transform: translateY(-1px); border-color: rgba(84, 216, 245, .58); background: rgba(34, 51, 88, .86); }
+.journey-mission-status { flex: 0 0 auto; padding: 4px 7px; border: 1px solid rgba(151, 170, 238, .2); border-radius: 999px; color: #aab7cf; font-size: 7px; letter-spacing: .04em; }
+.journey-mission-status.is-explored { border-color: rgba(169, 138, 255, .38); color: #d1c5ff; }
+.journey-mission-status.is-completed { border-color: rgba(84, 216, 245, .42); color: #aeeaf1; }
+@keyframes planet-hero-float { 50% { translate: 0 -7px; } }
+@keyframes planet-orbit-breathe { to { transform: rotate(-10deg) scale(1.035); opacity: .72; } }
+
+@media (max-width: 1000px) {
+  .planet-showcase-wrap { width: min(43vw, 420px); }
+  .planet-showcase { height: auto; }
+}
+@media (max-width: 760px) {
+  .planet-showcase-wrap { width: min(100%, 440px); margin: 26px auto 0; }
+  .planet-showcase { height: auto; width: min(100%, 390px); border-radius: 50%; }
+  .showcase-caption { right: 9%; bottom: 9%; left: 9%; }
+  .planet-tour-controls { margin-top: -38px; padding-bottom: 52px; }
+  .planet-picker { max-width: 430px; margin-top: 0; }
+  .page-hero .hero-actions { align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .planet-showcase-wrap::before, .planet-showcase { animation: none; }
+  .planet-card.is-current-destination { transform: none; }
+  .quiz-flight-track::after, .quiz-follow-up-links a,
+  .planet-tour-step, .planet-tour-toggle, .mission-next-links a { transition: none; }
+  .planet-tour-step:hover, .planet-tour-toggle:hover, .mission-next-links a:hover { transform: none; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
+}
+

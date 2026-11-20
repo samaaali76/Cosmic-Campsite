@@ -11,9 +11,11 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="progress.css">
+  <link rel="stylesheet" href="showcase.css">
   <script src="missions-data.js" defer></script>
   <script src="account-data.js" defer></script>
   <script src="progress.js" defer></script>
+  <script src="showcase.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -34,7 +36,7 @@
         <div class="profile-name-line"><h1 id="page-title"><span id="explorer-name">Cosmic Explorer</span><small>your space journey</small></h1><button class="edit-profile-button" id="edit-profile" type="button" aria-label="Edit explorer name">✎</button></div>
         <p class="hero-description">Every mission you explore and every answer you get right helps you rise through the ranks.</p>
         <div class="rank-block"><div class="rank-label"><span>CURRENT RANK</span><strong id="explorer-rank">Rookie Explorer</strong></div><div class="rank-track" role="progressbar" aria-label="Progress to next rank" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="rank-progress-fill"></span></div><p id="rank-progress-copy">Start exploring to earn your first XP.</p></div>
-        <a class="button button-primary" href="missions.html">Continue your journey <span aria-hidden="true">→</span></a>
+        <a class="button button-primary" id="progress-continue" href="missions.html">Continue your journey <span aria-hidden="true">→</span></a>
       </div>
       <div class="astronaut-scene" aria-label="Astronaut standing on the Moon with Earth in the distance">
         <img class="profile-cover" src="assets/progress/lunar-explorer.png" alt="Astronaut on the Moon with Earth above the horizon" width="1408" height="768">

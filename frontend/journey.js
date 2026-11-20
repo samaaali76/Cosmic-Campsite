@@ -9,7 +9,9 @@ const routeTitle = document.querySelector("#route-stop-title");
 const routeKicker = document.querySelector("#route-kicker");
 const routeDescription = document.querySelector("#route-description");
 const routeDestinationLink = document.querySelector("#route-destination-link");
+const missionHistoryKey = window.CosmicAccount?.storageKey("cosmic-campsite-mission-history") || "cosmic-campsite-mission-history";
 let revealObserver = null;
+let activeStopId = "moon";
 
 const journeyStops = [
   {
@@ -77,6 +79,13 @@ function addImageFallback(image) {
 }
 
 function renderMissionCard(mission) {
+  let activity = null;
+  try {
+    const history = JSON.parse(localStorage.getItem(missionHistoryKey) || "[]");
+    activity = Array.isArray(history) ? history.find((item) => item.id === mission.id) : null;
+  } catch { /* Journey cards remain available when browser storage is unavailable. */ }
+  const status = activity?.status === "Completed" ? "Completed" : activity ? "Explored" : "Ready to explore";
+  const statusClass = activity?.status === "Completed" ? "is-completed" : activity ? "is-explored" : "is-ready";
   const milestones = [...mission.timeline]
     .sort((first, second) => first.date.localeCompare(second.date))
     .slice(0, 2)
@@ -95,7 +104,7 @@ function renderMissionCard(mission) {
         <figcaption>${escapeHtml(mission.imageCredit)} · <a href="${escapeHtml(mission.imageSourceUrl)}" target="_blank" rel="noopener noreferrer">NASA source ↗</a></figcaption>
       </figure>
       <div class="journey-mission-copy">
-        <div class="journey-mission-meta"><span>${escapeHtml(mission.categoryLabel)}</span><span>${escapeHtml(mission.year)}</span></div>
+        <div class="journey-mission-meta"><span>${escapeHtml(mission.categoryLabel)} · ${escapeHtml(mission.year)}</span><span class="journey-mission-status ${statusClass}">${status}</span></div>
         <h4>${escapeHtml(mission.title)}</h4>
         <p>${escapeHtml(mission.summary)}</p>
         <div class="journey-milestones"><span class="milestones-label">MISSION MILESTONES</span><ol>${milestones}</ol></div>
@@ -107,6 +116,7 @@ function renderMissionCard(mission) {
 function showJourneyStop(stopId) {
   const stop = journeyStops.find((item) => item.id === stopId);
   if (!stop) return;
+  activeStopId = stop.id;
 
   routeContent.classList.remove("is-changing");
   void routeContent.offsetWidth;
@@ -138,6 +148,11 @@ routePicker.addEventListener("click", (event) => {
   const routeButton = event.target.closest(".route-stop");
   if (routeButton) showJourneyStop(routeButton.dataset.route);
 });
+
+window.addEventListener("storage", (event) => {
+  if (event.key === missionHistoryKey || event.key === "cosmic-campsite-mission-history") showJourneyStop(activeStopId);
+});
+window.addEventListener("cosmic-mission-history-updated", () => showJourneyStop(activeStopId));
 
 const heroImage = document.querySelector(".journey-photo");
 addImageFallback(heroImage);

@@ -112,6 +112,20 @@ function renderJourneyRoute() {
   const missions = window.COSMIC_MISSIONS || [];
   const history = readList(MISSION_KEY);
   const completedCount = history.filter((item) => item.status === "Completed").length;
+  const nextMission = journeyStages
+    .filter((stage) => completedCount >= stage.unlockAt)
+    .flatMap((stage) => stage.missions)
+    .map((id) => missions.find((mission) => mission.id === id))
+    .find((mission) => mission && !history.some((item) => item.id === mission.id && item.status === "Completed"));
+  const continueLink = document.querySelector("#progress-continue");
+  if (continueLink) {
+    continueLink.href = nextMission ? `missions.html?mission=${encodeURIComponent(nextMission.id)}` : "missions.html";
+    continueLink.replaceChildren(document.createTextNode(nextMission ? `Continue with ${nextMission.title} ` : "Review your flight log "));
+    const arrow = document.createElement("span");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "→";
+    continueLink.append(arrow);
+  }
   document.querySelector("#journey-route").innerHTML = journeyStages.map((stage, index) => {
     const locked = completedCount < stage.unlockAt;
     const cards = stage.missions.map((id) => {
