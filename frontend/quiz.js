@@ -4,6 +4,8 @@ document.documentElement.classList.add("js-ready");
 const questionBank = [
   {
     id: "mars-red-planet",
+    planetId: "mars",
+    missionId: "curiosity",
     topic: "Planets",
     sourceUrl: "https://science.nasa.gov/mars/facts/",
     difficulty: "Easy",
@@ -14,6 +16,8 @@ const questionBank = [
   },
   {
     id: "jupiter-largest",
+    planetId: "jupiter",
+    missionId: "voyager-1",
     topic: "Planets",
     sourceUrl: "https://science.nasa.gov/solar-system/skywatching/night-sky-network/spot-the-king-of-planets-observe-jupiter/",
     difficulty: "Easy",
@@ -39,6 +43,7 @@ const questionBank = [
   },
   {
     id: "apollo-11-landing",
+    missionId: "apollo-11",
     topic: "Moon missions",
     sourceUrl: "https://www.nasa.gov/mission/apollo-11/",
     difficulty: "Medium",
@@ -49,6 +54,8 @@ const questionBank = [
   },
   {
     id: "perseverance-jezero",
+    planetId: "mars",
+    missionId: "perseverance",
     topic: "Mars missions",
     sourceUrl: "https://science.nasa.gov/mission/mars-2020-perseverance/",
     difficulty: "Medium",
@@ -59,6 +66,7 @@ const questionBank = [
   },
   {
     id: "mercury-nearest-sun",
+    planetId: "mercury",
     topic: "Planets",
     sourceUrl: "https://science.nasa.gov/mercury/facts/",
     difficulty: "Medium",
@@ -69,6 +77,7 @@ const questionBank = [
   },
   {
     id: "iss-orbit",
+    planetId: "earth",
     topic: "Space exploration",
     sourceUrl: "https://www.nasa.gov/missions/station/spot-the-station-frequently-asked-questions/",
     difficulty: "Medium",
@@ -79,6 +88,7 @@ const questionBank = [
   },
   {
     id: "venus-slow-rotation",
+    planetId: "venus",
     topic: "Planets",
     sourceUrl: "https://science.nasa.gov/venus/venus-facts/",
     difficulty: "Hard",
@@ -89,6 +99,7 @@ const questionBank = [
   },
   {
     id: "new-horizons-pluto",
+    missionId: "new-horizons",
     topic: "Space missions",
     sourceUrl: "https://science.nasa.gov/mission/new-horizons/",
     difficulty: "Hard",
@@ -99,6 +110,7 @@ const questionBank = [
   },
   {
     id: "webb-orbit",
+    missionId: "james-webb",
     topic: "Space telescopes",
     sourceUrl: "https://science.nasa.gov/asset/webb/webbs-orbit-at-sun-earth-lagrange-point-2-l2/",
     difficulty: "Hard",
@@ -242,7 +254,7 @@ function renderQuestion() {
   `).join("");
 }
 
-function showFeedback(isCorrect, explanation, sourceUrl) {
+function showFeedback(isCorrect, question) {
   answerFeedback.classList.remove("is-incorrect", "is-correct", "feedback-enter");
   answerFeedback.classList.add(isCorrect ? "is-correct" : "is-incorrect");
   void answerFeedback.offsetWidth;
@@ -258,15 +270,35 @@ function showFeedback(isCorrect, explanation, sourceUrl) {
   const heading = document.createElement("strong");
   heading.textContent = isCorrect ? "That's right!" : "Not quite — here's the answer.";
   const detail = document.createElement("span");
-  detail.textContent = explanation;
+  detail.textContent = question.explanation;
   copy.append(heading, detail);
   const sourceLink = document.createElement("a");
   sourceLink.className = "answer-source";
-  sourceLink.href = sourceUrl;
+  sourceLink.href = question.sourceUrl;
   sourceLink.target = "_blank";
   sourceLink.rel = "noopener noreferrer";
   sourceLink.textContent = "Explore this fact at NASA ↗";
   copy.append(sourceLink);
+
+  const followUps = [];
+  if (question.planetId) {
+    const planetLink = document.createElement("a");
+    planetLink.href = `planets.html?planet=${encodeURIComponent(question.planetId)}`;
+    planetLink.textContent = `Continue to ${question.planetId[0].toUpperCase()}${question.planetId.slice(1)} →`;
+    followUps.push(planetLink);
+  }
+  if (question.missionId) {
+    const missionLink = document.createElement("a");
+    missionLink.href = `missions.html?mission=${encodeURIComponent(question.missionId)}`;
+    missionLink.textContent = "Open related mission →";
+    followUps.push(missionLink);
+  }
+  if (followUps.length) {
+    const nextStops = document.createElement("div");
+    nextStops.className = "quiz-follow-up-links";
+    nextStops.append(...followUps);
+    copy.append(nextStops);
+  }
   answerFeedback.replaceChildren(icon, copy);
   answerFeedback.hidden = false;
 }
@@ -290,7 +322,7 @@ function selectAnswer(selectedButton) {
   if (isCorrect) score += 1;
   scoreValue.textContent = score;
   updateMissionProgress((currentQuestionIndex + 1) / questions.length);
-  showFeedback(isCorrect, question.explanation, question.sourceUrl);
+  showFeedback(isCorrect, question);
   nextQuestionButton.textContent = currentQuestionIndex === questions.length - 1 ? "See my results" : "Next question";
   nextQuestionButton.hidden = false;
   nextQuestionButton.focus();
@@ -302,6 +334,9 @@ function updateMissionProgress(fraction) {
   progressRing.style.strokeDasharray = String(circumference);
   progressRing.style.strokeDashoffset = String(circumference * (1 - fraction));
   progressPercent.textContent = `${percent}%`;
+  const flightTrack = document.querySelector("#quiz-flight-track");
+  flightTrack.style.setProperty("--flight-progress", `${percent}%`);
+  flightTrack.style.setProperty("--flight-marker", `${8 + percent * .84}%`);
   progressRingLabel.setAttribute("aria-label", `Mission progress: ${percent}%`);
 }
 

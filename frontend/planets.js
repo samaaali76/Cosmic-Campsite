@@ -169,7 +169,7 @@ function addImageFallback(image) {
   }
 }
 
-function showFeaturedPlanet(planetId) {
+function showFeaturedPlanet(planetId, { updateUrl = true, announce = true, animate = true, view = "showcase" } = {}) {
   const planet = planets.find((item) => item.id === planetId);
   const showcasePhoto = document.querySelector("#showcase-photo");
   const showcase = document.querySelector("#planet-showcase");
@@ -180,10 +180,17 @@ function showFeaturedPlanet(planetId) {
   showcase.classList.remove("image-unavailable");
   showcasePhoto.alt = planet.imageAlt;
   showcasePhoto.src = planet.image;
+  showcase.setAttribute("aria-live", announce ? "polite" : "off");
   showcasePhoto.classList.remove("is-changing");
-  void showcasePhoto.offsetWidth;
-  showcasePhoto.classList.add("is-changing");
+  if (animate && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    void showcasePhoto.offsetWidth;
+    showcasePhoto.classList.add("is-changing");
+  }
   document.querySelector("#showcase-number").textContent = `${String(planet.order).padStart(2, "0")} / ${planet.name.toUpperCase()}`;
+  document.querySelector("#hero-planet-name").textContent = planet.name;
+  document.querySelector("#hero-planet-index").textContent = `${String(planet.order).padStart(2, "0")} / 08`;
+  document.querySelector("#hero-planet-description").textContent = planet.description;
+  showcase.setAttribute("aria-label", `${planet.name} image. Use arrow keys or swipe to change planets.`);
   document.querySelector("#showcase-credit").textContent = planet.imageCredit;
   const sourceLink = document.querySelector("#showcase-source");
   sourceLink.href = planet.imageSource;
@@ -194,7 +201,64 @@ function showFeaturedPlanet(planetId) {
     button.classList.toggle("is-active", isSelected);
     button.setAttribute("aria-pressed", String(isSelected));
   });
+  document.querySelectorAll("[data-map-planet]").forEach((button) => {
+    const isSelected = button.dataset.mapPlanet === planet.id;
+    button.classList.toggle("is-selected", isSelected);
+    button.setAttribute("aria-pressed", String(isSelected));
+  });
+  document.querySelectorAll(".planet-card").forEach((card) => {
+    const isSelected = card.querySelector("[data-planet]")?.dataset.planet === planet.id;
+    card.classList.toggle("is-current-destination", isSelected);
+    const selectButton = card.querySelector("[data-planet]");
+    if (isSelected) selectButton.setAttribute("aria-current", "true");
+    else selectButton.removeAttribute("aria-current");
+  });
+
+  if (updateUrl) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("planet", planet.id);
+    if (view === "showcase") url.searchParams.set("view", "showcase");
+    else url.searchParams.delete("view");
+    try { window.history.replaceState({}, "", url); } catch { /* The selected planet still works when URL updates are unavailable. */ }
+  }
 }
+
+function moveFeaturedPlanet(direction) {
+  const selectedId = document.querySelector(".planet-pick.is-active")?.dataset.heroPlanet || "earth";
+  const selectedIndex = planets.findIndex((planet) => planet.id === selectedId);
+  const nextIndex = (selectedIndex + direction + planets.length) % planets.length;
+  showFeaturedPlanet(planets[nextIndex].id);
+}
+
+let guidedTourTimer = null;
+const guidedTourToggle = document.querySelector("#planet-tour-toggle");
+const guidedTourStatus = document.querySelector("#planet-tour-status");
+
+function stopGuidedTour() {
+  if (guidedTourTimer) window.clearInterval(guidedTourTimer);
+  guidedTourTimer = null;
+  guidedTourToggle.setAttribute("aria-pressed", "false");
+  guidedTourToggle.innerHTML = 'Start guided tour <span aria-hidden="true">▶</span>';
+}
+
+function startGuidedTour() {
+  if (guidedTourTimer) {
+    stopGuidedTour();
+    guidedTourStatus.textContent = "Guided tour paused.";
+    return;
+  }
+  guidedTourToggle.setAttribute("aria-pressed", "true");
+  guidedTourToggle.innerHTML = 'Pause guided tour <span aria-hidden="true">Ⅱ</span>';
+  guidedTourStatus.textContent = "Guided tour started. A new planet appears every two seconds.";
+  guidedTourTimer = window.setInterval(() => moveFeaturedPlanet(1), 2000);
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && guidedTourTimer) {
+    stopGuidedTour();
+    guidedTourStatus.textContent = "Guided tour paused while this tab is hidden.";
+  }
+});
 
 function setupScrollReveal() {
   if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -213,10 +277,57 @@ function setupScrollReveal() {
   revealItems.forEach((item) => revealObserver.observe(item));
 }
 
-function showPlanetDetails(planetId) {
+function setupPlanetScrollJourney() {
+  const section = document.querySelector("#planet-list");
+  const grid = document.querySelector("#planet-grid");
+  if (!section || !grid) return;
+
+  let frame = 0;
+  const updateActivePlanet = () => {
+    frame = 0;
+    if (grid.hidden || guidedTourTimer) return;
+    const sectionBounds = section.getBoundingClientRect();
+    if (sectionBounds.top > window.innerHeight * .72 || sectionBounds.bottom < 100) return;
+
+    const viewportCenterY = window.innerHeight * .52;
+    const viewportCenterX = window.innerWidth / 2;
+    const visibleCards = [...grid.querySelectorAll(".planet-card")].map((card) => {
+      const bounds = card.getBoundingClientRect();
+      const inReadingBand = bounds.top < window.innerHeight * .66 && bounds.bottom > window.innerHeight * .36;
+      return { card, bounds, inReadingBand };
+    }).filter((item) => item.inReadingBand);
+    if (!visibleCards.length) return;
+
+    visibleCards.sort((first, second) => {
+      const firstY = Math.abs(first.bounds.top + first.bounds.height / 2 - viewportCenterY);
+      const secondY = Math.abs(second.bounds.top + second.bounds.height / 2 - viewportCenterY);
+      if (Math.abs(firstY - secondY) > 16) return firstY - secondY;
+      const firstX = Math.abs(first.bounds.left + first.bounds.width / 2 - viewportCenterX);
+      const secondX = Math.abs(second.bounds.left + second.bounds.width / 2 - viewportCenterX);
+      return firstX - secondX;
+    });
+
+    const activeCard = visibleCards[0].card;
+    const planetId = activeCard.querySelector("[data-planet]")?.dataset.planet;
+    if (!planetId) return;
+    if (document.querySelector(".planet-card.is-current-destination") === activeCard) return;
+    showFeaturedPlanet(planetId, { updateUrl: true, announce: false, animate: false, view: "showcase" });
+  };
+  const scheduleUpdate = () => {
+    if (!frame) frame = window.requestAnimationFrame(updateActivePlanet);
+  };
+
+  window.addEventListener("scroll", scheduleUpdate, { passive: true });
+  window.addEventListener("resize", scheduleUpdate, { passive: true });
+  scheduleUpdate();
+}
+
+function showPlanetDetails(planetId, shouldScroll = true) {
   const planet = planets.find((item) => item.id === planetId);
 
   if (!planet) return;
+  stopGuidedTour();
+  showFeaturedPlanet(planet.id, { view: "detail" });
 
   document.querySelectorAll("[data-map-planet]").forEach((button) => {
     const selected = button.dataset.mapPlanet === planet.id;
@@ -269,7 +380,7 @@ function showPlanetDetails(planetId) {
   void detailPanel.offsetWidth;
   detailPanel.classList.add("is-opening");
   document.querySelector("#explorer-title").textContent = `${planet.name}: a closer look`;
-  detailPanel.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  if (shouldScroll) detailPanel.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
   backButton.focus({ preventScroll: true });
 }
 
@@ -406,7 +517,6 @@ function setupSolarMap() {
     const button = event.target.closest("[data-map-planet]");
     if (!button) return;
     const planetId = button.dataset.mapPlanet;
-    showFeaturedPlanet(planetId);
     showPlanetDetails(planetId);
   });
 }
@@ -512,6 +622,7 @@ planetGrid.addEventListener("click", (event) => {
 backButton.addEventListener("click", showAllPlanets);
 
 createPlanetCards();
+setupPlanetScrollJourney();
 setupSolarMap();
 renderDiameterScale();
 setupPlanetComparison();
@@ -529,7 +640,55 @@ planetPicker.querySelectorAll("img").forEach((image) => {
 
 planetPicker.addEventListener("click", (event) => {
   const planetButton = event.target.closest(".planet-pick");
-  if (planetButton) showFeaturedPlanet(planetButton.dataset.heroPlanet);
+  if (planetButton) {
+    stopGuidedTour();
+    showFeaturedPlanet(planetButton.dataset.heroPlanet);
+  }
+});
+
+guidedTourToggle.addEventListener("click", startGuidedTour);
+document.querySelector("#planet-previous").addEventListener("click", () => {
+  stopGuidedTour();
+  moveFeaturedPlanet(-1);
+});
+document.querySelector("#planet-next").addEventListener("click", () => {
+  stopGuidedTour();
+  moveFeaturedPlanet(1);
+});
+
+const planetShowcase = document.querySelector("#planet-showcase");
+planetShowcase.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+    event.preventDefault();
+    stopGuidedTour();
+    moveFeaturedPlanet(1);
+  } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+    event.preventDefault();
+    stopGuidedTour();
+    moveFeaturedPlanet(-1);
+  }
+});
+let touchStartX = null;
+planetShowcase.addEventListener("pointerdown", (event) => {
+  touchStartX = event.pointerType === "touch" ? event.clientX : null;
+}, { passive: true });
+planetShowcase.addEventListener("pointerup", (event) => {
+  if (touchStartX === null) return;
+  const distance = event.clientX - touchStartX;
+  touchStartX = null;
+  if (Math.abs(distance) >= 48) {
+    stopGuidedTour();
+    moveFeaturedPlanet(distance < 0 ? 1 : -1);
+  }
+}, { passive: true });
+planetShowcase.addEventListener("pointercancel", () => { touchStartX = null; }, { passive: true });
+
+document.querySelector("#hero-planet-missions").addEventListener("click", () => {
+  stopGuidedTour();
+  const selectedId = document.querySelector(".planet-pick.is-active")?.dataset.heroPlanet || "earth";
+  showPlanetDetails(selectedId, false);
+  const missionSection = document.querySelector("#planet-missions");
+  missionSection.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
 });
 
 setupScrollReveal();
@@ -537,8 +696,8 @@ setupScrollReveal();
 // Allow Journey links to open a planet's detail card directly.
 const requestedPlanetId = new URLSearchParams(window.location.search).get("planet");
 if (planets.some((planet) => planet.id === requestedPlanetId)) {
-  showFeaturedPlanet(requestedPlanetId);
-  showPlanetDetails(requestedPlanetId);
+  if (new URLSearchParams(window.location.search).get("view") === "showcase") showFeaturedPlanet(requestedPlanetId);
+  else showPlanetDetails(requestedPlanetId);
 }
 
 // Mobile navigation follows the same accessible open/close pattern as the Home page.

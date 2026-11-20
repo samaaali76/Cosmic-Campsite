@@ -140,11 +140,19 @@ function sourceLink(url, label = "Source") {
   return `<a class="source-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)} <span aria-hidden="true">↗</span></a>`;
 }
 
+const planetDestination = { mars: "mars", "earth-orbit": "earth", "sun-earth-l2": "earth" };
+const missionPlanetStops = {
+  "voyager-1": [{ id: "jupiter", label: "Jupiter flyby" }, { id: "saturn", label: "Saturn flyby" }]
+};
 function renderMissionCards(missionList) {
   missionGrid.innerHTML = missionList.map((mission) => {
-    const destinations = mission.destinations.map((destination) => destination.id === "mars"
-      ? `<a class="destination-link" href="planets.html" aria-label="Explore Mars in Planet Explorer">${escapeHtml(destination.label)}</a>`
-      : `<span class="destination-label">${escapeHtml(destination.label)}</span>`).join(", ");
+    const destinations = mission.destinations.map((destination) => planetDestination[destination.id]
+      ? `<a class="destination-link" href="planets.html?planet=${planetDestination[destination.id]}" aria-label="Explore ${escapeHtml(destination.label)} in Planet Explorer">${escapeHtml(destination.label)}</a>`
+      : `<span class="destination-label">${escapeHtml(destination.label)}</span>`);
+    const flybyStops = (missionPlanetStops[mission.id] || []).map((stop) =>
+      `<a class="destination-link" href="planets.html?planet=${encodeURIComponent(stop.id)}" aria-label="Explore ${escapeHtml(stop.label)} in Planet Explorer">${escapeHtml(stop.label)}</a>`
+    );
+    const destinationMarkup = [...destinations, ...flybyStops].join(", ");
     return `
       <article class="mission-card" data-category="${escapeHtml(mission.category)}">
         <div class="mission-image-wrap" data-mission-label="${escapeHtml(mission.title)}">
@@ -153,7 +161,7 @@ function renderMissionCards(missionList) {
         <div class="mission-card-copy">
           <div class="mission-meta"><span class="mission-category">${escapeHtml(mission.categoryLabel)}</span><span class="mission-year">${escapeHtml(mission.year)}</span></div>
           <h3>${escapeHtml(mission.title)}</h3>
-          <p class="mission-destination">Destination: ${destinations}</p>
+          <p class="mission-destination">Destination: ${destinationMarkup}</p>
           <p class="mission-summary">${escapeHtml(mission.summary)}</p>
           <button class="learn-more" type="button" data-mission="${escapeHtml(mission.id)}" aria-label="Explore ${escapeHtml(mission.title)} details">Explore mission <span aria-hidden="true">→</span></button>
         </div>
@@ -234,7 +242,7 @@ function renderMissionSections(mission) {
     <section class="detail-section"><h3>Why It Still Matters</h3><p>${escapeHtml(mission.whyItMatters)}</p>${sourceLink(mission.whyItMattersSourceUrl)}</section>
     <section class="detail-section debrief" data-question-id="${escapeHtml(debrief.questionId)}" data-correct-answer="${escapeHtml(debrief.correctAnswerId)}">
       <p class="debrief-eyebrow">MISSION DEBRIEF · ${escapeHtml(debrief.difficulty)}</p><h3>${escapeHtml(debrief.question)}</h3>
-      <div class="debrief-options">${answers}</div><p class="debrief-feedback" aria-live="polite" tabindex="-1"></p>${sourceLink(debrief.sourceUrl, "Learn more")}
+      <div class="debrief-options">${answers}</div><p class="debrief-feedback" aria-live="polite" tabindex="-1"></p><div class="mission-next-links" hidden></div>${sourceLink(debrief.sourceUrl, "Learn more")}
     </section>`;
 }
 
@@ -319,13 +327,28 @@ dialogSections.addEventListener("click", (event) => {
   });
   const mission = missions.find((item) => item.debrief.questionId === debrief.dataset.questionId);
   if (mission) {
-    recordMissionActivity(mission, "Completed");
     const unlockedBadge = recordMissionActivity(mission, "Completed");
     showMissionCompletionToast(unlockedBadge ? `Mission completed · ${unlockedBadge} badge unlocked!` : "Mission completed · Flight log updated");
   }
   const feedback = debrief.querySelector(".debrief-feedback");
-  feedback.textContent = `${isCorrect ? "Correct! " : "Not quite. "}${mission ? mission.debrief.explanation : "Review the mission source to explore the answer."}`;
+  feedback.textContent = `${isCorrect ? "Correct! " : "Not quite. "}${mission ? `${mission.debrief.explanation} Mission logged in your flight record.` : "Review the mission source to explore the answer."}`;
   feedback.classList.add(isCorrect ? "feedback-correct" : "feedback-incorrect");
+  if (mission) {
+    const nextLinks = debrief.querySelector(".mission-next-links");
+    const planetId = mission.destinations.map((destination) => planetDestination[destination.id]).find(Boolean)
+      || (missionPlanetStops[mission.id] || [])[0]?.id;
+    if (planetId) {
+      const planetLink = document.createElement("a");
+      planetLink.href = `planets.html?planet=${encodeURIComponent(planetId)}`;
+      planetLink.textContent = `Explore ${planetId[0].toUpperCase()}${planetId.slice(1)} →`;
+      nextLinks.append(planetLink);
+    }
+    const quizLink = document.createElement("a");
+    quizLink.href = "quiz.html";
+    quizLink.textContent = "Continue to flight training →";
+    nextLinks.append(quizLink);
+    nextLinks.hidden = false;
+  }
   feedback.focus();
 });
 

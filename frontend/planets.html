@@ -11,9 +11,11 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="planets.css">
+  <link rel="stylesheet" href="showcase.css">
   <script src="missions-data.js" defer></script>
   <script src="account-data.js" defer></script>
   <script src="planets.js" defer></script>
+  <script src="showcase.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -47,14 +49,17 @@
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="page-hero-inner page-shell">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-line"></span> OUR SOLAR NEIGHBORHOOD</p>
-          <h1 id="page-title">Meet your <span>planetary neighbors.</span></h1>
-          <p class="hero-description">Eight unique worlds orbit our Sun. Start your tour close to home, then travel outward to the giant planets at the edge of our solar system.</p>
-          <a class="button button-primary" href="#planet-list">Start exploring <span aria-hidden="true">↓</span></a>
+          <p class="eyebrow"><span class="eyebrow-line"></span> PLANETARY FIELD NOTES · <span id="hero-planet-index">03 / 08</span></p>
+          <h1 id="page-title"><span id="hero-planet-name">Earth</span><span aria-hidden="true">.</span></h1>
+          <p class="hero-description" id="hero-planet-description">Our home is a rocky planet with liquid water on its surface. It is the only world we know of that supports life.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#planet-list">Start exploring <span aria-hidden="true">↓</span></a>
+            <button class="button button-outline" id="hero-planet-missions" type="button">Open mission log <span aria-hidden="true">↗</span></button>
+          </div>
           <div class="planet-count"><span class="count-mark" aria-hidden="true">✦</span><strong>8 planets</strong><span>one extraordinary solar system</span></div>
         </div>
         <div class="planet-showcase-wrap" data-reveal>
-          <figure class="planet-showcase" id="planet-showcase" aria-live="polite">
+          <figure class="planet-showcase" id="planet-showcase" role="group" tabindex="0" aria-label="Earth image. Use arrow keys or swipe to change planets." aria-live="polite">
             <img class="showcase-photo" id="showcase-photo" src="https://images-assets.nasa.gov/image/as17-148-22727/as17-148-22727~small.jpg" alt="Apollo 17 photograph of Earth with Africa, cloud systems, and the Antarctic ice cap visible." width="640" height="640" fetchpriority="high" decoding="async">
             <span class="planet-image-placeholder" aria-hidden="true">✦</span>
             <div class="showcase-overlay" aria-hidden="true"></div>
@@ -64,6 +69,13 @@
               <a class="showcase-source" id="showcase-source" href="https://images.nasa.gov/details/as17-148-22727" target="_blank" rel="noopener noreferrer">View NASA image ↗</a>
             </figcaption>
           </figure>
+          <img class="planets-astronaut" src="assets/images/astronaut-drifting.svg" alt="" aria-hidden="true" width="180" height="230">
+          <div class="planet-tour-controls" role="group" aria-label="Planet tour controls">
+            <button class="planet-tour-step" id="planet-previous" type="button" aria-label="Previous planet">←</button>
+            <button class="planet-tour-toggle" id="planet-tour-toggle" type="button" aria-pressed="false">Start guided tour <span aria-hidden="true">▶</span></button>
+            <button class="planet-tour-step" id="planet-next" type="button" aria-label="Next planet">→</button>
+            <span class="visually-hidden" id="planet-tour-status" role="status" aria-live="polite"></span>
+          </div>
           <div class="planet-picker" id="planet-picker" role="group" aria-label="Choose a planet image to preview">
             <button class="planet-pick" type="button" data-hero-planet="mercury" aria-label="Preview Mercury" aria-pressed="false"><img src="https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg" alt="" width="64" height="64" loading="lazy"><span>Mercury</span></button>
             <button class="planet-pick" type="button" data-hero-planet="venus" aria-label="Preview Venus" aria-pressed="false"><img src="https://images-assets.nasa.gov/image/PIA00072/PIA00072~small.jpg" alt="" width="64" height="64" loading="lazy"><span>Venus</span></button>

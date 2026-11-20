@@ -1,3 +1,39 @@
+// Keep the local Blue Marble visible until Spline has finished rendering its
+// first frame, so the hero never opens with an empty planet space.
+const homeEarthViewer = document.querySelector("#hero-earth");
+const homeHero = document.querySelector(".hero");
+if (homeEarthViewer && homeHero) {
+  homeEarthViewer.addEventListener("load-complete", () => {
+    window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+      homeHero.classList.add("is-earth-ready");
+    }));
+  }, { once: true });
+}
+
+const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+if (homeHero && finePointer.matches && !reducedMotion.matches) {
+  let pointerFrame = 0;
+  let latestPointer = null;
+  homeHero.addEventListener("pointermove", (event) => {
+    latestPointer = event;
+    if (pointerFrame) return;
+    pointerFrame = window.requestAnimationFrame(() => {
+      pointerFrame = 0;
+      const bounds = homeHero.getBoundingClientRect();
+      const horizontal = Math.max(-1, Math.min(1, ((latestPointer.clientX - bounds.left) / bounds.width - .5) * 2));
+      const vertical = Math.max(-1, Math.min(1, ((latestPointer.clientY - bounds.top) / bounds.height - .5) * 2));
+      homeHero.style.setProperty("--earth-tilt-x", `${(-vertical * 2.4).toFixed(2)}deg`);
+      homeHero.style.setProperty("--earth-tilt-y", `${(horizontal * 3.2).toFixed(2)}deg`);
+      homeHero.style.setProperty("--earth-shift-x", `${(horizontal * 7).toFixed(1)}px`);
+      homeHero.style.setProperty("--earth-shift-y", `${(vertical * 6).toFixed(1)}px`);
+    });
+  }, { passive: true });
+  homeHero.addEventListener("pointerleave", () => {
+    ["--earth-tilt-x", "--earth-tilt-y", "--earth-shift-x", "--earth-shift-y"].forEach((property) => homeHero.style.removeProperty(property));
+  }, { passive: true });
+}
+
 // Mobile navigation: keep the menu state available to assistive technology.
 const menuToggle = document.querySelector(".menu-toggle");
 const primaryNavigation = document.querySelector("#primary-navigation");
