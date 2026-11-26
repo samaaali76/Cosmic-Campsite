@@ -1410,18 +1410,22 @@ h2 span { color: #a89bff; }
   -webkit-mask-image: radial-gradient(circle at center, #000 47%, transparent 50%);
   mask-image: radial-gradient(circle at center, #000 47%, transparent 50%);
 }
-@media (max-width: 900px) {
-  .hero-earth-image { top: 11%; right: 1%; width: min(57vw, 540px); }
+@media (min-width: 701px) and (max-width: 900px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr) minmax(0, .86fr); }
+  .hero-copy { min-width: 0; max-width: 100%; }
+  .hero-copy h1 { max-width: 100%; font-size: clamp(42px, 5.4vw, 58px); }
+  .hero-earth-image { top: auto; right: 2%; bottom: 3%; width: min(31vw, 280px); }
 }
 @media (max-width: 700px) {
   .hero-earth-image {
-    top: 56%;
-    right: 3%;
-    width: min(64vw, 330px);
+    top: auto;
+    right: 4%;
+    bottom: 2%;
+    width: min(56vw, 280px);
   }
 }
 @media (max-width: 390px) {
-  .hero-earth-image { top: 60%; right: 4%; width: 66vw; }
+  .hero-earth-image { right: 4%; width: min(54vw, 210px); }
 }
 
 .hero-astronaut {

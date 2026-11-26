@@ -69,8 +69,19 @@ body.auth-page { min-height:100vh; margin:0; overflow-x:hidden; color:var(--auth
 .input-shell:focus-within .field-icon { color:#8de8f6; transform:scale(1.08); }
 .input-shell.has-error { border-color:rgba(255,126,148,.62); box-shadow:0 0 0 3px rgba(255,93,128,.08); }
 .field-icon { width:17px; flex:0 0 auto; color:#818fac; font-size:14px; text-align:center; }
-.input-shell input { width:100%; min-width:0; height:46px; border:0; outline:0; color:#eef3ff; background:transparent; font:400 11px var(--cosmic-font-body,"DM Sans",sans-serif); }
+.input-shell input { width:100%; min-width:0; height:46px; border:0; outline:0; color:#eef3ff; caret-color:#eef3ff; color-scheme:dark; background:transparent; font:400 11px var(--cosmic-font-body,"DM Sans",sans-serif); }
 .input-shell input::placeholder { color:#687590; }.input-shell input:focus-visible { outline:0; }
+.input-shell input:-webkit-autofill,
+.input-shell input:-webkit-autofill:hover,
+.input-shell input:-webkit-autofill:focus,
+.input-shell input:-webkit-autofill:active,
+.input-shell input:autofill {
+  -webkit-text-fill-color:#eef3ff !important;
+  caret-color:#eef3ff;
+  background-color:transparent !important;
+  -webkit-box-shadow:0 0 0 1000px #07101f inset;
+  box-shadow:0 0 0 1000px #07101f inset;
+}
 .field-check { color:#70dfc9; font-size:13px; opacity:0; }.input-shell input:valid:not(:placeholder-shown)~.field-check { opacity:1; }
 .password-toggle { width:28px; height:32px; display:grid; flex:0 0 auto; place-items:center; border:0; border-radius:7px; color:#8d9ab5; background:transparent; cursor:pointer; }
 .password-toggle:hover { color:#e3ecff; background:rgba(153,172,220,.08); }.password-toggle svg { width:17px; fill:none; stroke:currentColor; stroke-width:1.6; }

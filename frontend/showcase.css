@@ -299,6 +299,15 @@ body:not(.auth-page)::after { opacity: .23; animation-duration: 130s; }
 }
 
 /* Rebuild the visual language around deep space, cold light, and observatory glass. */
+.brand .brand-mark {
+  background: url("assets/branding/cosmic-campsite-logo.png") center / cover no-repeat;
+  border: 0;
+  transform: none;
+  box-shadow: none;
+}
+.brand .brand-mark::before,
+.brand .brand-mark > span { display: none; }
+
 .site-header { border-bottom-color: rgba(128, 183, 219, .12); }
 .page-hero,
 .journey-hero,
