@@ -36,9 +36,10 @@ All paths below are relative to the API base URL, except the root health check.
 | `PATCH /users/profile` | Save Progress page name/avatar edits via `frontend/progress.js` and `account-data.js`. | Yes | Implemented. |
 | `GET /progress` | Hydrate quiz, mission, and profile data on the Progress page. | Yes | Implemented. |
 | `POST /progress/quizzes` | Save signed-in quiz attempts from `frontend/quiz.js`. | Yes | Implemented. |
+| `DELETE /progress/quizzes` | Clear the signed-in user's saved quiz attempts. | Yes | Implemented. |
 | `POST /progress/missions` | Save signed-in mission activity from `frontend/missions.js`. | Yes | Implemented. |
 
-No separate `/missions` or `/quizzes` API is implemented. The mission and quiz route/controller files are empty placeholders and are not mounted by `server.js`. Their history is handled by the Progress endpoints below.
+No standalone mission or quiz catalog APIs are implemented. Quiz attempts and mission history are handled by the Progress endpoints below.
 
 ## Request and response details
 
@@ -174,6 +175,19 @@ Success is `201 Created`:
 
 The backend validates integer `score` and `total`, requires `1 <= total <= 100` and `0 <= score <= total`, and derives `percentage` and `date` itself. Thus the client-sent `date` and `percentage` are currently ignored. `level` defaults to `Explorer` and is limited to 20 characters. The backend keeps at most the latest 50 attempts per user.
 
+### `DELETE /progress/quizzes`
+
+Requires authentication. No request body is required. Success is `200 OK`:
+
+```json
+{
+  "message": "Quiz history cleared.",
+  "quizAttempts": []
+}
+```
+
+This clears only the authenticated user's `quizAttempts` array and preserves `missionHistory`. Missing or invalid authentication returns `401`; an unhandled database error returns `500` using the standard error response.
+
 ### `POST /progress/missions`
 
 Requires authentication. `frontend/missions.js` sends:
@@ -223,6 +237,7 @@ The controllers also map Mongoose validation errors during registration to `400`
 
 - **Authentication is wired in code:** Login/Register pages load `account-data.js` and `auth.js`; `auth.js` posts to `/users/login` or `/users/register`, stores the returned session, then navigates to Progress.
 - **Progress is wired in code:** `progress.js` initially renders local storage, hydrates from `GET /progress` for signed-in users, and posts name/avatar changes through `PATCH /users/profile`.
+- **Clear Quiz History is account-aware:** signed-in users call `DELETE /progress/quizzes`; the local quiz cache is cleared only after success. Guest quiz history remains local-only. Mission history is not affected.
 - **Quiz persistence is wired for signed-in users:** quiz interactions and scoring run locally; completed attempts are saved locally and also posted to `/progress/quizzes` when a session exists. The backend ignores the client date and percentage and returns its canonical values. The current helper does not replace its local latest attempt with the returned server attempt; next hydration returns the server copy.
 - **Mission persistence is wired for signed-in users:** mission interactions and history run locally and call `/progress/missions` when signed in. The server upserts by mission ID. There is no standalone mission API or mission catalog endpoint.
 - **Other pages:** Home, Planet Explorer, and Journey load `account-data.js` for session-aware account navigation, but no planet or journey data API calls were found.

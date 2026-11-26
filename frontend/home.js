@@ -47,7 +47,7 @@ document.querySelectorAll(".real-space-image").forEach((image) => {
       if (!image.dataset.rootPathTried) {
         image.dataset.rootPathTried = "true";
         image.addEventListener("error", showImageFallback, { once: true });
-        image.src = "/frontend/assets/home/apollo15-astronaut-seated-rover.jpg";
+        image.src = "assets/home/apollo15-astronaut-seated-rover.jpg";
         return;
       }
 
