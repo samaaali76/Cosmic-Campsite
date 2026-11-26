@@ -144,8 +144,9 @@ function renderJourneyRoute() {
   }).join("");
 }
 
-function showAchievement(message) {
+function showAchievement(message, label = "ACHIEVEMENT UNLOCKED") {
   const toast = document.querySelector("#achievement-toast");
+  toast.querySelector("small").textContent = label;
   document.querySelector("#toast-message").textContent = message;
   toast.hidden = false;
   window.clearTimeout(showAchievement.timer);
@@ -167,9 +168,23 @@ function renderProgress() {
   renderJourneyRoute();
 }
 
-clearButton.addEventListener("click", () => {
-  localStorage.removeItem(QUIZ_KEY);
-  renderProgress();
+clearButton.addEventListener("click", async () => {
+  clearButton.disabled = true;
+  try {
+    if (window.CosmicAccount?.isSignedIn()) {
+      const result = await window.CosmicAccount.clearQuizHistory();
+      if (!result) throw new Error("Sign in to clear saved quiz history.");
+    }
+    localStorage.removeItem(QUIZ_KEY);
+    renderProgress();
+  } catch (error) {
+    const message = error instanceof TypeError
+      ? "Could not reach the server. Quiz history was not cleared. Try again."
+      : error.message || "Quiz history could not be cleared. Try again.";
+    showAchievement(message, "SYNC ISSUE");
+  } finally {
+    clearButton.disabled = false;
+  }
 });
 window.addEventListener("storage", (event) => {
   if (event.key === QUIZ_KEY || event.key === MISSION_KEY || event.key === PROFILE_KEY) { renderProgress(); renderProfile(); }

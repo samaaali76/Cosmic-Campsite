@@ -45,6 +45,11 @@
     return request("/progress/quizzes", { method: "POST", body: JSON.stringify(attempt) });
   }
 
+  async function clearQuizHistory() {
+    if (!session()?.token) return null;
+    return request("/progress/quizzes", { method: "DELETE" });
+  }
+
   async function saveMissionActivity(activity) {
     if (!session()?.token) return null;
     return request("/progress/missions", { method: "POST", body: JSON.stringify(activity) });
@@ -62,6 +67,7 @@
     storageKey,
     hydrateProgress,
     saveQuizAttempt,
+    clearQuizHistory,
     saveMissionActivity,
     updateProfile,
     isSignedIn: () => Boolean(session()?.token)

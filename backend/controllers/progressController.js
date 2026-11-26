@@ -32,6 +32,14 @@ async function saveQuizAttempt(req, res, next) {
   } catch (error) { next(error); }
 }
 
+async function clearQuizAttempts(req, res, next) {
+  try {
+    req.user.quizAttempts = [];
+    await req.user.save();
+    res.json({ message: "Quiz history cleared.", quizAttempts: [] });
+  } catch (error) { next(error); }
+}
+
 async function saveMissionActivity(req, res, next) {
   try {
     const id = String(req.body.id || "");
@@ -57,4 +65,4 @@ async function saveMissionActivity(req, res, next) {
   } catch (error) { next(error); }
 }
 
-module.exports = { snapshot, saveQuizAttempt, saveMissionActivity };
+module.exports = { snapshot, saveQuizAttempt, clearQuizAttempts, saveMissionActivity };
