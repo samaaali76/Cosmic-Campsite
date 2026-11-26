@@ -1383,69 +1383,45 @@ h2 span { color: #a89bff; }
   .button:hover, .button:active, .destination-card:hover { transform: none; }
 }
 
-/* Spline Earth sits over the existing cosmic artwork, which remains the fallback. */
-.hero-earth-stage {
+/* The local Blue Marble image provides a lightweight, circular Earth visual. */
+.hero-earth-image {
   position: absolute;
   z-index: 4;
   top: 8%;
   right: 3.5%;
   width: min(48vw, 660px);
-  height: min(48vw, 660px);
-  overflow: hidden;
-  pointer-events: none;
-  display: block;
-  opacity: 0;
-  transition: opacity .55s ease, transform .38s cubic-bezier(.2,.7,.2,1);
-  background: radial-gradient(circle, rgba(19, 89, 171, .16), transparent 67%);
-}
-.hero-earth-fallback {
-  position: absolute;
-  z-index: 5;
-  top: 8%;
-  right: 3.5%;
-  width: min(48vw, 660px);
-  height: min(48vw, 660px);
+  aspect-ratio: 1;
   display: grid;
   place-items: center;
-  opacity: .94;
   pointer-events: none;
-  transform-origin: 50% 50%;
-  animation: home-earth-fallback-float 14s ease-in-out infinite alternate;
-  transition: opacity .65s ease, transform .38s cubic-bezier(.2,.7,.2,1);
+  background: radial-gradient(circle, rgba(19, 89, 171, .16), transparent 67%);
 }
-.hero-earth-stage,
-.hero-earth-fallback { transform: perspective(1200px) rotateX(var(--earth-tilt-x, 0deg)) rotateY(var(--earth-tilt-y, 0deg)) translate3d(var(--earth-shift-x, 0px), var(--earth-shift-y, 0px), 0); }
-.hero-earth-fallback img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; filter: drop-shadow(0 0 32px rgba(83, 151, 255, .28)); }
-.hero.is-earth-ready .hero-earth-stage { opacity: 1; }
-.hero.is-earth-ready .hero-earth-fallback { opacity: 0; }
-@keyframes home-earth-fallback-float {
-  to { translate: 0 -7px; rotate: .35deg; }
-}
-.hero-earth-stage canvas {
-  position: relative;
-  z-index: 1;
+.hero-earth-image img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: block;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+  width: 140%;
+  height: 140%;
+  max-width: none;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 32px rgba(83, 151, 255, .28));
+  -webkit-mask-image: radial-gradient(circle at center, #000 47%, transparent 50%);
+  mask-image: radial-gradient(circle at center, #000 47%, transparent 50%);
 }
 @media (max-width: 900px) {
-  .hero-earth-stage, .hero-earth-fallback { top: 11%; right: 1%; width: min(57vw, 540px); height: min(57vw, 540px); }
+  .hero-earth-image { top: 11%; right: 1%; width: min(57vw, 540px); }
 }
 @media (max-width: 700px) {
-  .hero-earth-stage, .hero-earth-fallback {
-    top: 35%;
-    right: -3%;
-    width: min(78vw, 390px);
-    height: min(78vw, 390px);
+  .hero-earth-image {
+    top: 56%;
+    right: 3%;
+    width: min(64vw, 330px);
   }
 }
 @media (max-width: 390px) {
-  .hero-earth-stage, .hero-earth-fallback { top: 37%; right: -5%; width: 78vw; height: 78vw; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-earth-stage, .hero-earth-fallback { transform: none !important; transition: opacity .3s ease; }
-  .hero-earth-stage { display: none; }
+  .hero-earth-image { top: 60%; right: 4%; width: 66vw; }
 }
 
 .hero-astronaut {

@@ -8,14 +8,11 @@
   <title>Cosmic Campsite | Your Universe Awaits</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.spline.design" crossorigin>
-  <link rel="preconnect" href="https://prod.spline.design" crossorigin>
   <link rel="preload" as="image" href="assets/home/apollo17-blue-marble.jpg" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="home.css">
   <link rel="stylesheet" href="showcase.css">
-  <script type="module" src="https://cdn.spline.design/@splinetool/viewer@2.0.184/build/spline-viewer.js"></script>
   <script src="missions-data.js" defer></script>
   <script src="account-data.js" defer></script>
   <script src="home.js" defer></script>
@@ -55,14 +52,13 @@
       <figure class="hero-art" role="img" aria-label="An astronaut stands on the Moon beneath the distant Earth and a star-filled sky.">
         <img class="hero-backdrop" src="assets/images/moon-astronaut-home.png" alt="" width="1000" height="562" fetchpriority="high" decoding="async">
         <img class="hero-astronaut" src="assets/images/astronaut-drifting.svg" alt="" aria-hidden="true" width="220" height="300">
-        <div class="hero-earth-fallback" aria-hidden="true">
-          <img src="assets/home/apollo17-blue-marble.jpg" alt="" width="1280" height="1280" decoding="async">
-        </div>
         <figcaption class="hero-photo-caption">
           <span class="hero-photo-caption-label">ARTIST'S CONCEPT · COSMIC CAMPSITE</span>
         </figcaption>
       </figure>
-      <spline-viewer class="hero-earth-stage" id="hero-earth" url="https://prod.spline.design/iu4vxYnZ1RTcKQdb/scene.splinecode" background="transparent" loading="eager" aria-hidden="true"></spline-viewer>
+      <div class="hero-earth-image" aria-hidden="true">
+        <img src="assets/home/apollo17-blue-marble.jpg" alt="" width="1280" height="1280" decoding="async">
+      </div>
       <div class="hero-inner page-shell">
         <div class="hero-copy" data-reveal>
           <p class="eyebrow"><span class="eyebrow-line"></span> EXPLORE <span aria-hidden="true">·</span> DISCOVER <span aria-hidden="true">·</span> LEARN</p>
